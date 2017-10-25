@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrackerBarrel.Foundation
+namespace CrackerBarrel.Foundation.Console
 {
     class Program
     {

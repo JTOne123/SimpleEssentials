@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CrackerBarrel.Foundation")]
+[assembly: AssemblyTitle("CrackerBarrel.Foundation.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CrackerBarrel.Foundation")]
+[assembly: AssemblyProduct("CrackerBarrel.Foundation.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c4929644-75b0-4768-be28-e9961bb0b35d")]
+[assembly: Guid("bd19b858-6b40-4065-bb1c-2bf5697169a6")]
 
 // Version information for an assembly consists of the following four values:
 //
