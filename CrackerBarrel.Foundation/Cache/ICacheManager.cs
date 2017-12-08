@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CrackerBarrel.Foundation.Cache
 {
     public interface ICacheManager
     {
-        void AddToCache<T>(T data, string cacheKey, DateTime? expiration = null);
-        IEnumerable<T> GetCachedList<T>(string cacheKey);
-        T GetCachedItem<T>(string cacheKey);
-        void UpdateCache<T>(T data, string cacheKey, DateTime? expiration = null);
-        void InvalideCache(string cacheKey);
-        void RemoveCache(string cacheKey);
+        void Add<T>(T data, string cacheKey, DateTime? expiration = null);
+        IEnumerable<T> GetList<T>(string cacheKey);
+        T Get<T>(string cacheKey);
+        void Update<T>(T data, string cacheKey, DateTime? expiration = null);
+        void Invalidate(string cacheKey);
+        void Delete(string cacheKey);
     }
 }

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CrackerBarrel.Foundation.Cache
 {
-    public class SessionObject<T>
+    public class SessionObject<T> : ISessionObject<T>
     {
-        public T Data;
-        public DateTime? Expiration;
+        public T Data { get; set; }
+        public DateTime? Expiration { get; set; }
     }
 }

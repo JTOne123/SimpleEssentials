@@ -38,6 +38,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=6.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.6.0.0\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
     </Reference>
@@ -58,12 +61,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cache\CustomMemCache.cs" />
+    <Compile Include="Cache\BaseCacheManager.cs" />
+    <Compile Include="Cache\ICacheable.cs" />
     <Compile Include="Cache\ICacheManager.cs" />
-    <Compile Include="Cache\SessionCache.cs" />
+    <Compile Include="Cache\ISessionObject.cs" />
+    <Compile Include="Cache\MemoryCacheManager.cs" />
+    <Compile Include="Cache\SessionCacheManager.cs" />
     <Compile Include="Cache\SessionObject.cs" />
+    <Compile Include="DataProvider\DbDataProvider.cs" />
+    <Compile Include="DataProvider\IDataProvider.cs" />
+    <Compile Include="DataProvider\IDbProvider.cs" />
+    <Compile Include="DataProvider\IFileProvider.cs" />
+    <Compile Include="DataStore\DbStore.cs" />
+    <Compile Include="DataStore\IDataStore.cs" />
+    <Compile Include="DataStore\IDbStore.cs" />
+    <Compile Include="Diagnostics\ILog.cs" />
+    <Compile Include="IO\FileHandler.cs" />
+    <Compile Include="IO\FolderHandler.cs" />
+    <Compile Include="IO\Handler.cs" />
+    <Compile Include="IO\IFileHandler.cs" />
+    <Compile Include="IO\IFolderHandler.cs" />
+    <Compile Include="IO\IHandler.cs" />
+    <Compile Include="IO\Types\File.cs" />
+    <Compile Include="IO\Types\Folder.cs" />
+    <Compile Include="IO\Types\IFile.cs" />
+    <Compile Include="IO\Types\IFileType.cs" />
+    <Compile Include="IO\Types\IFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Base\CrudRepository.cs" />
+    <Compile Include="Utils\PredicateBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

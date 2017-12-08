@@ -32,7 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrackerBarrel.Foundation, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrackerBarrel.Foundation.1.0.0.4\lib\net40\CrackerBarrel.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper, Version=6.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrackerBarrel.Foundation.1.0.0.4\lib\net40\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrackerBarrel.Foundation.1.0.0.4\lib\net40\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Contrib, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrackerBarrel.Foundation.1.0.0.4\lib\net40\Dapper.Contrib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,11 +55,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="CustomCampaignRepository.cs" />
+    <Compile Include="Dapper\SqlMapperExtensions.cs" />
+    <Compile Include="Models\CustomCampaign.cs" />
+    <Compile Include="Models\CustomCampaignEmployee.cs" />
+    <Compile Include="Models\CustomCampaignStatus.cs" />
+    <Compile Include="Models\SpecialtyCoffeeSurveryResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
