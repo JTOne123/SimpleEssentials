@@ -6,15 +6,10 @@ namespace SimpleEssentials.IO
     {
         public abstract IFileType Create(string path);
 
-        public T Get<T>(string path) where T : IFileType, new()
-        {
-            T file = new T();
-            file.Load(path);
+        public abstract IFileType Get(string path);
 
-            return file;
-        }
-        public abstract bool Move(IFileType file, string newPath);
+        public abstract bool Move(ref IFileType file, string newPath);
 
-        public abstract bool Rename(IFileType file, string newName);
+        public abstract bool Rename(ref IFileType file, string newName);
     }
 }

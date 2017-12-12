@@ -11,7 +11,7 @@ namespace SimpleEssentials.IO
             return new Folder(path);
         }
 
-        public override bool Rename(IFileType file, string newName)
+        public override bool Rename(ref IFileType file, string newName)
         {
             var newFilePath = file.FullPath + System.IO.Path.DirectorySeparatorChar + newName;
             var tempFilePath = file.FullPath + "_tmpfile";
@@ -20,30 +20,25 @@ namespace SimpleEssentials.IO
             return file.Load(newFilePath);
         }
 
-        public IEnumerable<IFileType> GetAllFiles(string path)
+        public IEnumerable<IFileType> GetChildren(IFolder parentFolder)
         {
             var files = new List<IFileType>();
-            files.AddRange(GetChildFiles(path));
-            files.AddRange(GetChildFolders(path));
+            files.AddRange(GetChildFiles(parentFolder));
+            files.AddRange(GetChildFolders(parentFolder));
 
             return files;
         }
 
-        public IEnumerable<IFileType> GetAllFiles(IFolder parentFolder)
-        {
-            return GetAllFiles(parentFolder.FullPath);
-        }
-
-        public override bool Move(IFileType file, string newPath)
+        public override bool Move(ref IFileType file, string newPath)
         {
             System.IO.File.Move(file.FullPath, newPath);
             return file.Load(newPath);
         }
 
-        private static IEnumerable<IFileType> GetChildFiles(string dirPath)
+        public IEnumerable<IFile> GetChildFiles(IFolder parentFolder)
         {
-            var files = new List<IFileType>();
-            var filePaths = System.IO.Directory.GetFiles(dirPath);
+            var files = new List<IFile>();
+            var filePaths = System.IO.Directory.GetFiles(parentFolder.FullPath);
 
             foreach (var filePath in filePaths)
             {
@@ -56,10 +51,10 @@ namespace SimpleEssentials.IO
 
         }
 
-        private static IEnumerable<IFileType> GetChildFolders(string dirPath)
+        public IEnumerable<IFolder> GetChildFolders(IFolder parentFolder)
         {
-            var files = new List<IFileType>();
-            var filePaths = System.IO.Directory.GetDirectories(dirPath);
+            var files = new List<IFolder>();
+            var filePaths = System.IO.Directory.GetDirectories(parentFolder.FullPath);
 
             foreach (var filePath in filePaths)
             {
@@ -69,6 +64,11 @@ namespace SimpleEssentials.IO
             }
 
             return files;
+        }
+
+        public override IFileType Get(string path)
+        {
+            return new Folder(path);
         }
     }
 }

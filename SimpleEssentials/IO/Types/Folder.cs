@@ -29,7 +29,8 @@
                 return false;
 
             FullPath = path;
-            Name = System.IO.Path.GetDirectoryName(path);
+            var index = path.LastIndexOf(System.IO.Path.DirectorySeparatorChar);
+            Name = path.Substring(index + 1);
             Loaded = true;
 
             return true;

@@ -82,6 +82,8 @@
     <Compile Include="IO\IFileHandler.cs" />
     <Compile Include="IO\IFolderHandler.cs" />
     <Compile Include="IO\IHandler.cs" />
+    <Compile Include="IO\Readers\CsvReader.cs" />
+    <Compile Include="IO\Readers\IFileReader.cs" />
     <Compile Include="IO\Types\File.cs" />
     <Compile Include="IO\Types\Folder.cs" />
     <Compile Include="IO\Types\IFile.cs" />

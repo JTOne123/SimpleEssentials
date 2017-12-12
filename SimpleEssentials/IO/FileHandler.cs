@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Runtime.Remoting.Messaging;
+using SimpleEssentials.IO.Readers;
 using SimpleEssentials.IO.Types;
 
 namespace SimpleEssentials.IO
@@ -15,37 +15,41 @@ namespace SimpleEssentials.IO
             return new File(path);
         }
 
-        public override bool Move(IFileType file, string newPath)
+        public override bool Move(ref IFileType file, string newPath)
         {
-            System.IO.File.Move(file.FullPath, newPath);
-            file.FullPath = newPath;
+            var destPath = newPath + file.Name + ((IFile) file).Extension;
+            System.IO.File.Move(file.FullPath, destPath);
+            file.FullPath = destPath;
             return true;
         }
 
-        public override bool Rename(IFileType file, string newName)
+        public override bool Rename(ref IFileType file, string newName)
         {
             var filePath = new System.IO.FileInfo(file.FullPath).Directory?.FullName;
             var newFilePath = filePath + System.IO.Path.DirectorySeparatorChar + newName + ((IFile)file).Extension;
             System.IO.File.Move(file.FullPath, newFilePath);
+            file.Name = newName;
+            file.FullPath = newFilePath;
             return file.Load(file.FullPath);
         }
 
         public string Read(IFile file)
         {
             return System.IO.File.ReadAllText(file.FullPath);
+            
         }
 
-        public T Read<T>(IFile file)
+        public T Read<T>(IFile file, IFileReader fileReader)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ReadAll<T>(IFile file)
+        public IEnumerable<T> ReadAll<T>(IFile file, IFileReader fileReader)
         {
-            throw new NotImplementedException();
+            return fileReader?.ReadAll<T>(file.FullPath);
         }
 
-        public T ReadBy<T>(IFile file, Expression<Func<T, bool>> expression)
+        public T ReadBy<T>(IFile file, Expression<Func<T, bool>> expression, IFileReader fileReader)
         {
             
             throw new NotImplementedException();
@@ -69,6 +73,11 @@ namespace SimpleEssentials.IO
         public bool Write<T>(IFile file, IEnumerable<T> obj, bool append)
         {
             throw new NotImplementedException();
+        }
+
+        public override IFileType Get(string path)
+        {
+            return new File(path);
         }
     }
 }

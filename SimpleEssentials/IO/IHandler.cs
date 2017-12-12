@@ -5,9 +5,9 @@ namespace SimpleEssentials.IO
 {
     public interface IHandler
     {
-        T Get<T>(string path) where T : IFileType, new();
-        bool Move(IFileType file, string newPath);
+        bool Move(ref IFileType file, string newPath);
         IFileType Create(string path);
-        bool Rename(IFileType file, string newName);
+        IFileType Get(string path);
+        bool Rename(ref IFileType file, string newName);
     }
 }
