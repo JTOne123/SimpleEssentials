@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using SimpleEssentials.IO.Types;
+using File = SimpleEssentials.IO.Types.File;
 
 namespace SimpleEssentials.IO
 {
@@ -9,6 +13,17 @@ namespace SimpleEssentials.IO
         {
             System.IO.Directory.CreateDirectory(path);
             return new Folder(path);
+        }
+
+        public IFileType Create(string path, bool relative)
+        {
+            if (!relative)
+                return Create(path);
+
+            var filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            var finalpath = Path.GetDirectoryName(filePath) + System.IO.Path.DirectorySeparatorChar + path;
+            System.IO.Directory.CreateDirectory(finalpath);
+            return new Folder(finalpath);
         }
 
         public bool Rename(ref IFileType file, string newName)
@@ -70,5 +85,7 @@ namespace SimpleEssentials.IO
         {
             return new Folder(path);
         }
+
+        
     }
 }

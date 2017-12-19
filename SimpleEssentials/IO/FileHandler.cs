@@ -17,6 +17,14 @@ namespace SimpleEssentials.IO
             return new File(path);
         }
 
+        public IFileType Create(string fileName, IFolder parentFolder)
+        {
+            var finalPath = parentFolder.FullPath + System.IO.Path.DirectorySeparatorChar + fileName;
+            var newFile = System.IO.File.Create(finalPath);
+            newFile.Close();
+            return new File(finalPath);
+        }
+
         public bool Move(ref IFileType file, string newPath)
         {
             var destPath = newPath + file.Name + ((IFile) file).Extension;

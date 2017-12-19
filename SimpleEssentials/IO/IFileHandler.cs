@@ -10,6 +10,7 @@ namespace SimpleEssentials.IO
 {
     public interface IFileHandler : IHandler
     {
+        IFileType Create(string fileName, IFolder parentFolder);
         bool Write(IFile file, string content, bool append);
         void Write<T>(IFile file, T obj, IFileWriter fileWriter, bool append);
         void Write<T>(IFile file, IEnumerable<T> obj, IFileWriter fileWriter, bool append);
