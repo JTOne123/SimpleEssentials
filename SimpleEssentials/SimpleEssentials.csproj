@@ -47,6 +47,9 @@
     <Reference Include="Dapper.Contrib, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.Contrib.1.50.0\lib\net45\Dapper.Contrib.dll</HintPath>
     </Reference>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -78,7 +81,6 @@
     <Compile Include="Diagnostics\ILog.cs" />
     <Compile Include="IO\FileHandler.cs" />
     <Compile Include="IO\FolderHandler.cs" />
-    <Compile Include="IO\Handler.cs" />
     <Compile Include="IO\IFileHandler.cs" />
     <Compile Include="IO\IFolderHandler.cs" />
     <Compile Include="IO\IHandler.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="IO\Types\IFile.cs" />
     <Compile Include="IO\Types\IFileType.cs" />
     <Compile Include="IO\Types\IFolder.cs" />
+    <Compile Include="IO\Writers\CsvWriter.cs" />
+    <Compile Include="IO\Writers\IFileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\PredicateBuilder.cs" />
   </ItemGroup>

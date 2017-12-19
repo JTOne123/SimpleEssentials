@@ -8,6 +8,7 @@ namespace SimpleEssentials.DataStore
         bool Add<T>(T obj) where T : class, new();
         int AddAndReturnId<T>(string sql, T obj) where T : class, new();
         int AddList<T>(IEnumerable<T> obj, string sql) where T : class, new();
+        void BulkInsert<T>(IEnumerable<T> obj, string tableName) where T : class;
         T Get<T>(object id) where T : class, new();
         IEnumerable<T> GetByType<T>() where T : class, new();
         IEnumerable<T> GetByParameters<T>(string sql, object param);

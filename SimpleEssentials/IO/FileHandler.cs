@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using SimpleEssentials.IO.Readers;
 using SimpleEssentials.IO.Types;
+using SimpleEssentials.IO.Writers;
 
 namespace SimpleEssentials.IO
 {
-    public class FileHandler : Handler, IFileHandler
+    public class FileHandler : IFileHandler
     {
-        public override IFileType Create(string path)
+        public IFileType Create(string path)
         {
             var newFile = System.IO.File.Create(path);
             newFile.Close();
             return new File(path);
         }
 
-        public override bool Move(ref IFileType file, string newPath)
+        public bool Move(ref IFileType file, string newPath)
         {
             var destPath = newPath + file.Name + ((IFile) file).Extension;
             System.IO.File.Move(file.FullPath, destPath);
@@ -23,7 +25,7 @@ namespace SimpleEssentials.IO
             return true;
         }
 
-        public override bool Rename(ref IFileType file, string newName)
+        public bool Rename(ref IFileType file, string newName)
         {
             var filePath = new System.IO.FileInfo(file.FullPath).Directory?.FullName;
             var newFilePath = filePath + System.IO.Path.DirectorySeparatorChar + newName + ((IFile)file).Extension;
@@ -49,10 +51,10 @@ namespace SimpleEssentials.IO
             return fileReader?.ReadAll<T>(file.FullPath);
         }
 
-        public T ReadBy<T>(IFile file, Expression<Func<T, bool>> expression, IFileReader fileReader)
+        public IEnumerable<T> ReadBy<T>(IFile file, Func<T, bool> predicate, IFileReader fileReader)
         {
-            
-            throw new NotImplementedException();
+
+            return fileReader?.ReadAll<T>(file.FullPath).Where(predicate);
         }
 
         public bool Write(IFile file, string content, bool append)
@@ -65,17 +67,17 @@ namespace SimpleEssentials.IO
             return true;
         }
 
-        public bool Write<T>(IFile file, T obj, bool append)
+        public void Write<T>(IFile file, T obj, IFileWriter fileWriter, bool append)
         {
-            throw new NotImplementedException();
+            fileWriter?.Write(file.FullPath, obj, append);
         }
 
-        public bool Write<T>(IFile file, IEnumerable<T> obj, bool append)
+        public void Write<T>(IFile file, IEnumerable<T> obj, IFileWriter fileWriter, bool append)
         {
-            throw new NotImplementedException();
+            fileWriter?.Write(file.FullPath, obj, append);
         }
 
-        public override IFileType Get(string path)
+        public IFileType Get(string path)
         {
             return new File(path);
         }
