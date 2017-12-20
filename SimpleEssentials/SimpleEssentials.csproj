@@ -79,6 +79,7 @@
     <Compile Include="DataStore\IDataStore.cs" />
     <Compile Include="DataStore\IDbStore.cs" />
     <Compile Include="Diagnostics\ILog.cs" />
+    <Compile Include="Extensions\ConsoleExtensions.cs" />
     <Compile Include="IO\FileHandler.cs" />
     <Compile Include="IO\FolderHandler.cs" />
     <Compile Include="IO\IFileHandler.cs" />
