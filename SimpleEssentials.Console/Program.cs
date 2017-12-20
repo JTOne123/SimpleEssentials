@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleEssentials.Console.Models;
 using SimpleEssentials.IO.Types;
+using SimpleEssentials.IO;
+using SimpleEssentials.IO.Readers;
 
 namespace SimpleEssentials.Console
 {
@@ -31,9 +33,18 @@ namespace SimpleEssentials.Console
             //System.Console.WriteLine("--------------------------------------------------");
             //testRepo.SaveInteraction("        9", 1, 1);
 
-
+            var fileHandler = new FileHandler();
+            var folderHandler = new FolderHandler();
+            var tempDir = folderHandler.Get("@/testDir");
+            var tempFile = fileHandler.Get(@"/test");
+            var tempFile2 = fileHandler.Get(@"/test2");
             var testRepo = new TestRepository();
             var clients = testRepo.GetClients(1);
+
+            IFileReader reader = new CsvReader();
+            reader.ReadAll<int>(tempFile.FullPath);
+
+
 
             
             System.Console.WriteLine("Press Enter to Exit");

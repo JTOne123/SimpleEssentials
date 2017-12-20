@@ -20,63 +20,39 @@ namespace SimpleEssentials.DataStore
 
         public bool Add<T>(T obj) where T : class, new()
         {
-            try
+            using (SqlConnection connection = new SqlConnection())
             {
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    connection.ConnectionString = _connectionString;
-                    connection.Open();
+                connection.ConnectionString = _connectionString;
+                connection.Open();
 
-                    long rowsAffected = connection.Insert(obj);
-                    if (rowsAffected == 0)
-                        return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-                //TODO: log this error
+                long rowsAffected = connection.Insert(obj);
+                if (rowsAffected == 0)
+                    return false;
             }
             return true;
         }
 
         public int AddAndReturnId<T>(string sql, T obj) where T : class, new()
         {
-            try
+            using (SqlConnection connection = new SqlConnection())
             {
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    connection.ConnectionString = _connectionString;
-                    connection.Open();
+                connection.ConnectionString = _connectionString;
+                connection.Open();
 
-                    return connection.Query<int>(sql, obj).FirstOrDefault();
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                return -1;
-                //TODO: log this error
+                return connection.Query<int>(sql, obj).FirstOrDefault();
+
             }
         }
 
         public int AddList<T>(IEnumerable<T> obj, string sql) where T : class, new()
         {
-            try
+            using (SqlConnection connection = new SqlConnection())
             {
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    connection.ConnectionString = _connectionString;
-                    connection.Open();
-                    
+                connection.ConnectionString = _connectionString;
+                connection.Open();
 
-                    return connection.Execute(sql, obj);
-                }
-            }
-            catch (Exception ex)
-            {
-                return -1;
-                //TODO: log this error
+
+                return connection.Execute(sql, obj);
             }
         }
 
@@ -161,40 +137,23 @@ namespace SimpleEssentials.DataStore
 
         public int Execute(string sql, object param)
         {
-            try
+            using (SqlConnection connection = new SqlConnection())
             {
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    connection.ConnectionString = _connectionString;
-                    connection.Open();
-                    
-                    return connection.Execute(sql, param);
-                }
-            }
-            catch (Exception ex)
-            {
-                var error = ex.Message;
-                return -1;
-                //TODO: log this error
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+
+                return connection.Execute(sql, param);
             }
         }
 
         public bool Update<T>(T obj) where T : class, new()
         {
-            try
+            using (SqlConnection connection = new SqlConnection())
             {
-                using (SqlConnection connection = new SqlConnection())
-                {
-                    connection.ConnectionString = _connectionString;
-                    connection.Open();
-                    
-                    return connection.Update(obj);
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-                //TODO: log this error
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+
+                return connection.Update(obj);
             }
         }
 
