@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using System.Linq;
+using System.Threading;
+using FastMember;
 
 namespace SimpleEssentials.DataStore
 {
@@ -53,7 +55,19 @@ namespace SimpleEssentials.DataStore
                 return connection.Execute(sql, obj);
             }
         }
-        
+
+        public void BulkInsert<T>(IEnumerable<T> obj, string tableName) where T : class
+        {
+            using (var bulkCopy = new SqlBulkCopy(_connectionString))
+            {
+                using (var reader = ObjectReader.Create(obj))
+                {
+                    bulkCopy.DestinationTableName = tableName;
+                    bulkCopy.WriteToServer(reader);
+                }
+            }
+        }
+
         public bool Delete<T>(T obj) where T : class, new()
         {
             using (SqlConnection connection = new SqlConnection())

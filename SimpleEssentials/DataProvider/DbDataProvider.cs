@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading;
 using SimpleEssentials.Cache;
 using SimpleEssentials.DataStore;
 
@@ -44,6 +46,16 @@ namespace SimpleEssentials.DataProvider
                 _cacheManager?.Add(obj, cacheKey);
             return _dbStore.AddList(obj, sql);
         }
+
+        public void BulkInsert<T>(IEnumerable<T> obj, string tableName, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new()
+        {
+            if (invalidateCache)
+                _cacheManager?.Invalidate(cacheKey);
+            else
+                _cacheManager?.Add(obj, cacheKey);
+            _dbStore.BulkInsert(obj, tableName);
+        }
+
 
         public T Get<T>(object id, string cacheKey = null, DateTime? lifeTime = null) where T : class, new()
         {

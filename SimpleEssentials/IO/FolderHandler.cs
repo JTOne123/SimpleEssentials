@@ -1,17 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using SimpleEssentials.IO.Types;
+using File = SimpleEssentials.IO.Types.File;
 
 namespace SimpleEssentials.IO
 {
-    public class FolderHandler : Handler, IFolderHandler
+    public class FolderHandler : IFolderHandler
     {
-        public override IFileType Create(string path)
+        public IFileType Create(string path)
         {
             System.IO.Directory.CreateDirectory(path);
             return new Folder(path);
         }
 
-        public override bool Rename(ref IFileType file, string newName)
+        public IFileType Create(string path, bool relative)
+        {
+            if (!relative)
+                return Create(path);
+
+            var filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            var finalpath = Path.GetDirectoryName(filePath) + System.IO.Path.DirectorySeparatorChar + path;
+            System.IO.Directory.CreateDirectory(finalpath);
+            return new Folder(finalpath);
+        }
+
+        public bool Rename(ref IFileType file, string newName)
         {
             var newFilePath = file.FullPath + System.IO.Path.DirectorySeparatorChar + newName;
             var tempFilePath = file.FullPath + "_tmpfile";
@@ -29,7 +44,7 @@ namespace SimpleEssentials.IO
             return files;
         }
 
-        public override bool Move(ref IFileType file, string newPath)
+        public bool Move(ref IFileType file, string newPath)
         {
             System.IO.File.Move(file.FullPath, newPath);
             return file.Load(newPath);
@@ -66,9 +81,11 @@ namespace SimpleEssentials.IO
             return files;
         }
 
-        public override IFileType Get(string path)
+        public IFileType Get(string path)
         {
             return new Folder(path);
         }
+
+        
     }
 }

@@ -11,6 +11,7 @@ namespace SimpleEssentials.DataProvider
         bool Add<T>(T obj, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
         int AddAndReturnId<T>(string sql, T obj, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
         int AddList<T>(IEnumerable<T> obj, string sql, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
+        void BulkInsert<T>(IEnumerable<T> obj, string tableName, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
         T Get<T>(object id, string cacheKey = null, DateTime? lifeTime = null) where T : class, new();
         IEnumerable<T> GetByType<T>(string cacheKey = null, DateTime? lifeTime = null) where T : class, new();
         IEnumerable<T> GetByParameters<T>(string sql, object param, bool forceCache = false, string cacheKey = "", DateTime? lifeTime = null);
