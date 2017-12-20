@@ -58,14 +58,22 @@ namespace SimpleEssentials.DataStore
 
         public void BulkInsert<T>(IEnumerable<T> obj, string tableName) where T : class
         {
-            using (var bulkCopy = new SqlBulkCopy(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                using (var reader = ObjectReader.Create(obj))
+                connection.Open();
+                using (var bulkCopy = new SqlBulkCopy(connection))
                 {
-                    bulkCopy.DestinationTableName = tableName;
-                    bulkCopy.WriteToServer(reader);
+                    var properties = typeof(T).GetProperties();
+
+                    using (var reader = ObjectReader.Create(obj, properties.Select(prop => prop.Name).ToArray()))
+                    {
+                        bulkCopy.BulkCopyTimeout = 120;
+                        bulkCopy.DestinationTableName = tableName;
+                        bulkCopy.WriteToServer(reader);
+                    }
                 }
             }
+            
         }
 
         public bool Delete<T>(T obj) where T : class, new()
