@@ -24,7 +24,6 @@ namespace SimpleEssentials.Extensions
             var finalString = $"{sb}{text}{endString}";
 
             WriteLine(finalString, color);
-            Console.WriteLine();
         }
     }
 }

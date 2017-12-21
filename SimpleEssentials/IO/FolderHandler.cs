@@ -15,15 +15,23 @@ namespace SimpleEssentials.IO
             return new Folder(path);
         }
 
-        public IFileType Create(string path, bool relative)
+        public IFolder Create(string path, bool relative)
         {
             if (!relative)
-                return Create(path);
+                return (IFolder)Create(path);
 
             var filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
             var finalpath = Path.GetDirectoryName(filePath) + System.IO.Path.DirectorySeparatorChar + path;
             System.IO.Directory.CreateDirectory(finalpath);
-            return new Folder(finalpath);
+            var finalResult = System.IO.Path.GetDirectoryName(finalpath);
+            return new Folder(finalResult);
+        }
+
+        public IFolder Create(string path, IFolder parent)
+        {
+            var parentPath = parent.FullPath;
+            var finalPath = System.IO.Path.GetDirectoryName(parentPath + path);
+            return (IFolder) Create(finalPath);
         }
 
         public bool Rename(ref IFileType file, string newName)

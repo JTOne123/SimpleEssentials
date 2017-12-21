@@ -46,18 +46,23 @@ namespace SimpleEssentials.Console
             //IFileReader reader = new CsvReader();
             //reader.ReadAll<int>(tempFile.FullPath);
 
-            ConsoleEx.WriteTitle("Testi");
-            ConsoleEx.WriteTitle("Tsdfsesti");
-            ConsoleEx.WriteTitle("Testing");
-            ConsoleEx.WriteTitle("Tesi");
-            ConsoleEx.WriteTitle("Testihhjkhjk");
+            //ConsoleEx.WriteTitle("Testi");
+            //ConsoleEx.WriteTitle("Tsdfsesti");
+            //ConsoleEx.WriteTitle("Testing");
+            //ConsoleEx.WriteTitle("Tesi");
+            //ConsoleEx.WriteTitle("Testihhjkhjk");
 
-            var lines = new List<string[]>();
-            lines.Add(new [] {"Title", "Val", "Percent of total"});
-            lines.Add(new [] {"This is just a test with long", 20.ToString(), "500%"});
-            lines.Add(new [] {"test with short", 20000.ToString(), "1%"});
-            var formatted = ConsoleUtil.PadElementsInLines(lines, 10);
-            System.Console.WriteLine(formatted);
+            //var lines = new List<string[]>();
+            //lines.Add(new [] {"Title", "Val", "Percent of total"});
+            //lines.Add(new [] {"This is just a test with long", 20.ToString(), "500%"});
+            //lines.Add(new [] {"test with short", 20000.ToString(), "1%"});
+            //var formatted = ConsoleUtil.PadElementsInLines(lines, 10);
+            //System.Console.WriteLine(formatted);
+
+
+            IFolderHandler folderHandler = new FolderHandler();
+            var reportFolder = folderHandler.Create("/report/", true);
+            var testFolder = folderHandler.Create("/test/", reportFolder);
 
 
 

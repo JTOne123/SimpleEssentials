@@ -6,7 +6,8 @@ namespace SimpleEssentials.IO
 {
     public interface IFolderHandler : IHandler
     {
-        IFileType Create(string path, bool relative);
+        IFolder Create(string path, bool relative);
+        IFolder Create(string path, IFolder parent);
         IEnumerable<IFileType> GetChildren(IFolder parentFolder);
         IEnumerable<IFile> GetChildFiles(IFolder parentFolder);
         IEnumerable<IFolder> GetChildFolders(IFolder parentFolder);

@@ -17,7 +17,7 @@ namespace SimpleEssentials.IO
             return new File(path);
         }
 
-        public IFileType Create(string fileName, IFolder parentFolder)
+        public IFile Create(string fileName, IFolder parentFolder)
         {
             var finalPath = parentFolder.FullPath + System.IO.Path.DirectorySeparatorChar + fileName;
             var newFile = System.IO.File.Create(finalPath);
