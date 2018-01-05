@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Threading;
 using SimpleEssentials.Cache;
 using SimpleEssentials.DataStore;
@@ -118,10 +119,30 @@ namespace SimpleEssentials.DataProvider
             return _dbStore.Delete(obj);
         }
 
-        public int Execute(string sql, object param, string cacheKey = null, DateTime? lifeTime = null)
+        public int Execute(string sql, object param, string cacheKey = null, DateTime? lifeTime = null, bool invalidate = false)
         {
-            _cacheManager?.Invalidate(cacheKey);
-            return _dbStore.Execute(sql, param);
+            if (invalidate)
+                _cacheManager?.Invalidate(cacheKey);
+            var result = _cacheManager?.Get<int>(cacheKey);
+            if (result == null)
+            {
+                result = _dbStore.Execute(sql, param);
+                _cacheManager?.Add(result, cacheKey, lifeTime);
+            }
+            return result.Value;
+        }
+
+        public int ExecuteScalar(string sql, object param, string cacheKey = null, DateTime? lifeTime = null, bool invalidate = false)
+        {
+            if(invalidate)
+                _cacheManager?.Invalidate(cacheKey);
+            var result = _cacheManager?.Get<int>(cacheKey);
+            if (result == null)
+            {
+                result = _dbStore.ExecuteScalar(sql, param);
+                _cacheManager?.Add(result, cacheKey, lifeTime);
+            }
+            return result.Value;
         }
 
         public bool Update<T>(T obj, string cacheKey = null, DateTime? lifeTime = null) where T : class, new()

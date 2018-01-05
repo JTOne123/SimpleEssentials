@@ -154,6 +154,17 @@ namespace SimpleEssentials.DataStore
             }
         }
 
+        public int ExecuteScalar(string sql, object param)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+
+                return connection.ExecuteScalar<int>(sql, param);
+            }
+        }
+
         public bool Update<T>(T obj) where T : class, new()
         {
             using (SqlConnection connection = new SqlConnection())
