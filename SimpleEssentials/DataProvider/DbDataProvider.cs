@@ -113,6 +113,17 @@ namespace SimpleEssentials.DataProvider
             return results;
         }
 
+        public IEnumerable<T> GetMultiMap<T, T2, T3, T4>(string sql, Func<T, T2, T3, T4, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null)
+        {
+            var results = _cacheManager?.GetList<T>(cacheKey);
+            if (results == null)
+            {
+                results = _dbStore.GetMultiMap<T, T2, T3, T4>(sql, func, param, splitOn);
+                _cacheManager?.Add(results, cacheKey, lifeTime);
+            }
+            return results;
+        }
+
         public bool Delete<T>(T obj, string cacheKey = null) where T : class, new()
         {
             _cacheManager?.Delete(cacheKey);

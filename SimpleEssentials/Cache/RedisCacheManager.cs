@@ -62,6 +62,16 @@ namespace SimpleEssentials.Cache
         public override void Update<T>(T data, string cacheKey, DateTime? expiration = null)
         {
             Add(data, cacheKey, expiration);
+
+            var redis = ConnectionMultiplexer.Connect("");
+            var db = redis.GetDatabase();
+        }
+
+        public void test()
+        {
+            var redis = ConnectionMultiplexer.Connect("");
+            var db = redis.GetDatabase();
+
         }
     }
 }

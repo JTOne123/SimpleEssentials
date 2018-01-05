@@ -143,6 +143,18 @@ namespace SimpleEssentials.DataStore
             }
         }
 
+        public IEnumerable<T> GetMultiMap<T, T2, T3, T4>(string sql, Func<T, T2, T3, T4, T> func, object param = null, string splitOn = "")
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = _connectionString;
+                connection.Open();
+
+                return connection.Query<T, T2, T3, T4, T>(sql, func, param, splitOn: splitOn);
+
+            }
+        }
+
         public int Execute(string sql, object param)
         {
             using (SqlConnection connection = new SqlConnection())
