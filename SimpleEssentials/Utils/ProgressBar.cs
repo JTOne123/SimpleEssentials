@@ -17,6 +17,8 @@ namespace SimpleEssentials.Utils
         private bool _disposed;
         private int _animationIndex;
 
+        private string _label;
+
         public ProgressBar()
         {
             _timer = new Timer(TimerHandler, new AutoResetEvent(false), TimeSpan.FromSeconds(1.0 / 8), TimeSpan.FromSeconds(1.0 / 8));
@@ -30,11 +32,22 @@ namespace SimpleEssentials.Utils
             }
         }
 
+        public ProgressBar(string label) : this()
+        {
+            _label = label + " ";
+        }
+
         public void Report(double value)
         {
             // Make sure value is in [0..1] range
             value = Math.Max(0, Math.Min(1, value));
             Interlocked.Exchange(ref _currentProgress, value);
+        }
+
+        public void Report(double value, string label)
+        {
+            _label = label + " ";
+            Report(value);
         }
 
         private void TimerHandler(object state)
@@ -46,7 +59,7 @@ namespace SimpleEssentials.Utils
                 var progressBlockCount = (int)(_currentProgress * BlockCount);
                 var percent = (int)(_currentProgress * 100);
                 var text =
-                    $"[{new string('#', progressBlockCount)}{new string('-', BlockCount - progressBlockCount)}] {percent,3}% {Animation[_animationIndex++ % Animation.Length]}";
+                    $"{_label}[{new string('#', progressBlockCount)}{new string('-', BlockCount - progressBlockCount)}] {percent,3}% {Animation[_animationIndex++ % Animation.Length]}";
                 UpdateText(text);
 
                 ResetTimer();

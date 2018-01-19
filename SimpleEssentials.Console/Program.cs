@@ -18,7 +18,7 @@ namespace SimpleEssentials.Console
         static void Main(string[] args)
         {
             System.Console.WriteLine("Doing Stuff");
-            using (var progress = new ProgressBar())
+            using (var progress = new ProgressBar("Doing stuff too"))
             {
                 for (int i = 0; i <= 100; i++)
                 {

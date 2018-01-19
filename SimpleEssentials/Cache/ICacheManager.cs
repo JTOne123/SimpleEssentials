@@ -6,7 +6,8 @@ namespace SimpleEssentials.Cache
     public interface ICacheManager
     {
         void Add<T>(T data, string cacheKey, DateTime? expiration = null);
-        void AddHash<T>(IEnumerable<T> data, string cacheKey, string fieldKey, DateTime? expiration = null);
+        void AddHash<T>(IEnumerable<T> data, string cacheKey, DateTime? expiration = null);
+        void AddHash<T>(T data, string cacheKey, DateTime? expiration = null);
         T GetHash<T>(string cacheKey, string fieldKey);
         IEnumerable<T> GetList<T>(string cacheKey);
         T Get<T>(string cacheKey);

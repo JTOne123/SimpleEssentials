@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
+using Dapper.Contrib.Extensions;
 
 namespace SimpleEssentials.Cache
 {
@@ -24,6 +26,24 @@ namespace SimpleEssentials.Cache
             if (expiration == null)
                 expiration = DateTime.Now.Add(DefaultLifeSpan);
             _memoryCache.Add(cacheKey, data, (DateTime)expiration);
+        }
+
+        public override void AddHash<T>(IEnumerable<T> data, string cacheKey, DateTime? expiration = null)
+        {
+            var type = data.FirstOrDefault()?.GetType();
+            var properties = type?.GetProperties();
+            foreach (var prop in properties)
+            {
+                if (Attribute.IsDefined(prop, typeof(KeyAttribute)))
+                {
+                    //this prop is the key
+                }
+            }
+        }
+
+        public override void AddHash<T>(T data, string cacheKey, DateTime? expiration = null)
+        {
+
         }
 
         public override void Update<T>(T data, string cacheKey, DateTime? expiration = null)

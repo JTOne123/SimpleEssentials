@@ -9,7 +9,12 @@ namespace SimpleEssentials.Cache
 
         public abstract void Add<T>(T data, string cacheKey, DateTime? expiration = null);
 
-        public virtual void AddHash<T>(IEnumerable<T> data, string cacheKey, string fieldKey,
+        public virtual void AddHash<T>(IEnumerable<T> data, string cacheKey,
+            DateTime? expiration = null)
+        {
+            throw new NotImplementedException();
+        }
+        public virtual void AddHash<T>(T data, string cacheKey,
             DateTime? expiration = null)
         {
             throw new NotImplementedException();

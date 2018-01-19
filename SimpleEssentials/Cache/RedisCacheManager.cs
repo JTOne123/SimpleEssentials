@@ -24,9 +24,9 @@ namespace SimpleEssentials.Cache
             _context.Cache.SetObject(cacheKey, data);
         }
 
-        public override void AddHash<T>(IEnumerable<T> data, string cacheKey, string fieldKey, DateTime? expiration = null)
+        public override void AddHash<T>(IEnumerable<T> data, string cacheKey, DateTime? expiration = null)
         {
-            _context.Cache.SetHashed(cacheKey, fieldKey, data);
+            _context.Cache.SetHashed(cacheKey, "", data);
         }
 
         public override void Delete(string cacheKey)
