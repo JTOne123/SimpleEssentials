@@ -29,19 +29,36 @@ namespace SimpleEssentials.Console
 
             var dbProvider = new DbDataProvider();
 
-            
+
+            //for (int j = 0; j < 10; j++)
+            //{
+            //    var watch = System.Diagnostics.Stopwatch.StartNew();
+            //    for (int i = 0; i < 100000; i++)
+            //    {
+            //        var results = dbProvider.GetByType<CustomCampaign>(new CacheSettings() { Key = "CAMPAIGNS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
+            //    }
+            //    watch.Stop();
+            //    var elapsedMs = watch.ElapsedMilliseconds;
+            //    System.Console.WriteLine($"Elapsed Time: {elapsedMs}");
+            //}
+
+            //Thread.Sleep(10000);
+
             for (int j = 0; j < 10; j++)
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
-                for (int i = 0; i < 100000; i++)
+                for (int i = 0; i < 1000; i++)
                 {
-                    var results = dbProvider.GetByType<CustomCampaign>(new CacheSettings() { Key = "CAMPAIGNS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
+                    var results = dbProvider.GetByType<CustomCampaignEmployee>(new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
+                    var emp = dbProvider.Get<CustomCampaignEmployee>("  1509394", new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
+                    //var emp = results.FirstOrDefault(x => x.Employee_Id == "  1509394");
+                    //System.Console.WriteLine($"Employee: {emp.Employee_Id}");
                 }
                 watch.Stop();
                 var elapsedMs = watch.ElapsedMilliseconds;
                 System.Console.WriteLine($"Elapsed Time: {elapsedMs}");
             }
-            
+
 
 
 

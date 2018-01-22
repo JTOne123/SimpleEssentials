@@ -41,7 +41,7 @@ namespace SimpleEssentials.DataProvider
 
         public int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false)
         {
-            var results = GetFromCache<int>(cacheSettings);
+            var results = GetFromCache<int>(cacheSettings, sql);
             if (results != 0) return results;
 
             results = _dataStore.Execute(sql, param);
@@ -51,7 +51,7 @@ namespace SimpleEssentials.DataProvider
 
         public int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false)
         {
-            var results = GetFromCache<int>(cacheSettings);
+            var results = GetFromCache<int>(cacheSettings, sql);
             if (results != 0) return results;
 
             results = _dataStore.ExecuteScalar(sql, param);
@@ -61,7 +61,7 @@ namespace SimpleEssentials.DataProvider
 
         public T Get<T>(object id, CacheSettings cacheSettings = null) where T : class, new()
         {
-            var results = GetFromCache<T>(cacheSettings);
+            var results = GetFromCache<T>(cacheSettings, id.ToString());
             if (results != null) return results;
 
             results = _dataStore.Get<T>(id);
@@ -225,7 +225,7 @@ namespace SimpleEssentials.DataProvider
             }
         }
 
-        private T GetFromCache<T>(CacheSettings cacheSettings, string fieldKey = null)
+        private T GetFromCache<T>(CacheSettings cacheSettings, string fieldKey)
         {
             if (cacheSettings?.LifeSpan == null) return default(T);
 
@@ -234,10 +234,7 @@ namespace SimpleEssentials.DataProvider
                 case CacheStorage.Normal:
                     return _cacheManager.Get<T>(cacheSettings);
                 case CacheStorage.Hashed:
-                    if (!string.IsNullOrEmpty(fieldKey))
-                        return _cacheManager.GetSingleHash<T>(cacheSettings, fieldKey);
-                    else
-                        return (T)_cacheManager.GetHash<T>(cacheSettings);
+                    return _cacheManager.GetSingleHash<T>(cacheSettings, fieldKey);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(cacheSettings.StorageType), cacheSettings.StorageType, null);
             }
