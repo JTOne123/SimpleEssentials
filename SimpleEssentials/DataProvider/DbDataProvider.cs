@@ -1,189 +1,283 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Threading;
 using SimpleEssentials.Cache;
 using SimpleEssentials.DataStore;
+using SimpleEssentials.Injection;
 
 namespace SimpleEssentials.DataProvider
 {
     public class DbDataProvider : IDbProvider
     {
-        private readonly IDbStore _dbStore;
+        private readonly IDataStore _dataStore;
         private readonly ICacheManager _cacheManager;
 
-        public DbDataProvider(IDbStore dataStore, ICacheManager cacheManager)
+        public DbDataProvider()
         {
-            _dbStore = dataStore;
+            _dataStore = ContainerHelper.Container.GetInstance<IDataStore>();
+            _cacheManager = ContainerHelper.Container.GetInstance<ICacheManager>();
+        }
+
+        public DbDataProvider(IDataStore dataStore, ICacheManager cacheManager)
+        {
+            _dataStore = dataStore;
             _cacheManager = cacheManager;
         }
 
-        public bool Add<T>(T obj, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new()
+        public void BulkInsert<T>(IEnumerable<T> data, string tableName, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new()
         {
+            InsertListIntoCache(data, cacheSettings);
+            _dataStore.BulkInsert(data, tableName);
+        }
 
+        public bool Delete<T>(T data, CacheSettings cacheSettings = null, string fieldKey = null) where T : class, new()
+        {
+            DeleteFromCache(cacheSettings, fieldKey);
+           return _dataStore.Delete(data);
+        }
+
+        public int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false)
+        {
+            var results = GetFromCache<int>(cacheSettings);
+            if (results != 0) return results;
+
+            results = _dataStore.Execute(sql, param);
+            InsertIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false)
+        {
+            var results = GetFromCache<int>(cacheSettings);
+            if (results != 0) return results;
+
+            results = _dataStore.ExecuteScalar(sql, param);
+            InsertIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public T Get<T>(object id, CacheSettings cacheSettings = null) where T : class, new()
+        {
+            var results = GetFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.Get<T>(id);
+            InsertIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> GetByParameters<T>(string sql, object param, CacheSettings cacheSettings = null)
+        {
+            var results = GetListFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetByParameters<T>(sql, param);
+            InsertListIntoCache(results, cacheSettings);
+
+            return results;
+        }
+
+        public IEnumerable<T> GetByType<T>(CacheSettings cacheSettings = null) where T : class, new()
+        {
+            var results = GetListFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetByType<T>();
+            InsertListIntoCache(results, cacheSettings);
+
+            return results;
+        }
+
+        public IEnumerable<T> GetMultiMap<T, T2>(string sql, Func<T, T2, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null)
+        {
+            var results = GetListFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetMultiMap(sql, func, param, splitOn);
+            InsertListIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> GetMultiMap<T, T2, T3>(string sql, Func<T, T2, T3, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null)
+        {
+            var results = GetListFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetMultiMap(sql, func, param, splitOn);
+            InsertListIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> GetMultiMap<T, T2, T3, T4>(string sql, Func<T, T2, T3, T4, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null)
+        {
+            var results = GetListFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetMultiMap(sql, func, param, splitOn);
+            InsertListIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5>(string sql, Func<T, T2, T3, T4, T5, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null)
+        {
+            var results = GetListFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetMultiMap(sql, func, param, splitOn);
+            InsertListIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5, T6>(string sql, Func<T, T2, T3, T4, T5, T6, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null)
+        {
+            var results = GetListFromCache<T>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetMultiMap(sql, func, param, splitOn);
+            InsertListIntoCache(results, cacheSettings);
+            return results;
+        }
+
+        public bool Insert<T>(T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new()
+        {
+            if(invalidateCache)
+                DeleteFromCache(cacheSettings);
+
+            InsertIntoCache(data, cacheSettings);
+            return _dataStore.Add(data);
+        }
+
+        public int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new()
+        {
             if (invalidateCache)
-                _cacheManager?.Invalidate(cacheKey);
-            else
-                _cacheManager?.Add(obj, cacheKey);
-            return _dbStore.Add(obj);
+                DeleteFromCache(cacheSettings);
+
+            InsertIntoCache(data, cacheSettings);
+            return _dataStore.AddAndReturnId(sql, data);
         }
 
-        public int AddAndReturnId<T>(string sql, T obj, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new()
+        public int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new()
         {
-
-            if (invalidateCache)
-                _cacheManager?.Invalidate(cacheKey);
-            else
-                _cacheManager?.Add(obj, cacheKey);
-            return _dbStore.AddAndReturnId(sql, obj);
+            InsertIntoCache(data, cacheSettings);
+            return _dataStore.AddList(data, sql);
         }
 
-        public int AddList<T>(IEnumerable<T> obj, string sql, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new()
+        public bool Update<T>(T data, CacheSettings cacheSettings = null) where T : class, new()
         {
-            if (invalidateCache)
-                _cacheManager?.Invalidate(cacheKey);
-            else
-                _cacheManager?.Add(obj, cacheKey);
-            return _dbStore.AddList(obj, sql);
+            UpdateCache(data, cacheSettings);
+            return _dataStore.Update(data);
         }
 
-        public void BulkInsert<T>(IEnumerable<T> obj, string tableName, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new()
+        private void InsertIntoCache<T>(T data, CacheSettings cacheSettings)
         {
-            if (invalidateCache)
-                _cacheManager?.Invalidate(cacheKey);
-            else
-                _cacheManager?.Add(obj, cacheKey);
-            _dbStore.BulkInsert(obj, tableName);
-        }
+            if (cacheSettings?.LifeSpan == null) return;
 
-
-        public T Get<T>(object id, string cacheKey = null, DateTime? lifeTime = null) where T : class, new()
-        {
-            var results = _cacheManager?.Get<T>(cacheKey);
-            if (results == null)
+            switch (cacheSettings.StorageType)
             {
-                results = _dbStore.Get<T>(id);
-                _cacheManager?.Add(results, cacheKey, lifeTime);
+                case CacheStorage.Normal:
+                    _cacheManager?.Insert(data, cacheSettings);
+                    break;
+                case CacheStorage.Hashed:
+                    _cacheManager.InsertSingleHash(data, cacheSettings);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cacheSettings.StorageType), cacheSettings.StorageType, null);
             }
-            return results;
         }
 
-        public IEnumerable<T> GetByParameters<T>(string sql, object param, bool forceCache = false, string cacheKey = null, DateTime? lifeTime = null)
+        private void InsertListIntoCache<T>(IEnumerable<T> data, CacheSettings cacheSettings)
         {
-            var results =_cacheManager?.GetList<T>(cacheKey);
-            if (results == null || forceCache)
+            if (cacheSettings?.LifeSpan == null) return;
+
+            switch (cacheSettings.StorageType)
             {
-                results = _dbStore.GetByParameters<T>(sql, param);
-                _cacheManager?.Add(results, cacheKey, lifeTime);
+                case CacheStorage.Normal:
+                    _cacheManager?.Insert(data, cacheSettings);
+                    break;
+                case CacheStorage.Hashed:
+                    _cacheManager.InsertHash(data, cacheSettings);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cacheSettings.StorageType), cacheSettings.StorageType, null);
             }
-            return results;
         }
 
-        public IEnumerable<T> GetByType<T>(string cacheKey = null, DateTime? lifeTime = null) where T : class, new()
+        private void DeleteFromCache(CacheSettings cacheSettings, string fieldKey = null)
         {
-            var results = _cacheManager?.GetList<T>(cacheKey);
-            if (results == null)
+            if (cacheSettings?.LifeSpan == null) return;
+
+            switch (cacheSettings.StorageType)
             {
-                results = _dbStore.GetByType<T>();
-                _cacheManager?.Add(results, cacheKey, lifeTime);
+                case CacheStorage.Normal:
+                    _cacheManager?.Delete(cacheSettings);
+                    break;
+                case CacheStorage.Hashed:
+                    if(!string.IsNullOrEmpty(fieldKey))
+                        _cacheManager.DeleteSingleHash(cacheSettings, fieldKey);
+                    else
+                        _cacheManager.DeleteHash(cacheSettings);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cacheSettings.StorageType), cacheSettings.StorageType, null);
             }
-            return results;
         }
 
-        public IEnumerable<T> GetMultiMap<T, T2>(string sql, Func<T, T2, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null)
+        private T GetFromCache<T>(CacheSettings cacheSettings, string fieldKey = null)
         {
-            var results = _cacheManager?.GetList<T>(cacheKey);
-            if (results == null)
+            if (cacheSettings?.LifeSpan == null) return default(T);
+
+            switch (cacheSettings.StorageType)
             {
-                results = _dbStore.GetMultiMap<T, T2>(sql, func, param, splitOn);
-                _cacheManager?.Add(results, cacheKey, lifeTime);
+                case CacheStorage.Normal:
+                    return _cacheManager.Get<T>(cacheSettings);
+                case CacheStorage.Hashed:
+                    if (!string.IsNullOrEmpty(fieldKey))
+                        return _cacheManager.GetSingleHash<T>(cacheSettings, fieldKey);
+                    else
+                        return (T)_cacheManager.GetHash<T>(cacheSettings);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cacheSettings.StorageType), cacheSettings.StorageType, null);
             }
-            return results;
         }
 
-        public IEnumerable<T> GetMultiMap<T, T2, T3>(string sql, Func<T, T2, T3, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null)
+        private IEnumerable<T> GetListFromCache<T>(CacheSettings cacheSettings)
         {
-            var results = _cacheManager?.GetList<T>(cacheKey);
-            if (results == null)
+            if (cacheSettings?.LifeSpan == null) return default(IEnumerable<T>);
+
+            switch (cacheSettings.StorageType)
             {
-                results = _dbStore.GetMultiMap<T, T2, T3>(sql, func, param, splitOn);
-                _cacheManager?.Add(results, cacheKey, lifeTime);
+                case CacheStorage.Normal:
+                    return _cacheManager.GetList<T>(cacheSettings);
+                case CacheStorage.Hashed:
+                    return _cacheManager.GetHash<T>(cacheSettings);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cacheSettings.StorageType), cacheSettings.StorageType, null);
             }
-            return results;
         }
 
-        public IEnumerable<T> GetMultiMap<T, T2, T3, T4>(string sql, Func<T, T2, T3, T4, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null)
+        private void UpdateCache<T>(T data, CacheSettings cacheSettings)
         {
-            var results = _cacheManager?.GetList<T>(cacheKey);
-            if (results == null)
+            if (cacheSettings?.LifeSpan == null) return;
+
+            switch (cacheSettings.StorageType)
             {
-                results = _dbStore.GetMultiMap<T, T2, T3, T4>(sql, func, param, splitOn);
-                _cacheManager?.Add(results, cacheKey, lifeTime);
+                case CacheStorage.Normal:
+                    _cacheManager.Update(data, cacheSettings);
+                    break;
+                case CacheStorage.Hashed:
+                    if (data is IEnumerable<T> enumerable)
+                        _cacheManager.UpdateHash(enumerable, cacheSettings);
+                    else
+                        _cacheManager.UpdateSingleHash(data, cacheSettings);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(cacheSettings.StorageType), cacheSettings.StorageType, null);
             }
-            return results;
         }
 
-        public IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5>(string sql, Func<T, T2, T3, T4, T5, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null)
-        {
-            var results = _cacheManager?.GetList<T>(cacheKey);
-            if (results == null)
-            {
-                results = _dbStore.GetMultiMap<T, T2, T3, T4, T5>(sql, func, param, splitOn);
-                _cacheManager?.Add(results, cacheKey, lifeTime);
-            }
-            return results;
-        }
 
-        public IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5, T6>(string sql, Func<T, T2, T3, T4, T5, T6, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null)
-        {
-            var results = _cacheManager?.GetList<T>(cacheKey);
-            if (results == null)
-            {
-                results = _dbStore.GetMultiMap<T, T2, T3, T4, T5, T6>(sql, func, param, splitOn);
-                _cacheManager?.Add(results, cacheKey, lifeTime);
-            }
-            return results;
-        }
-
-        public bool Delete<T>(T obj, string cacheKey = null) where T : class, new()
-        {
-            _cacheManager?.Delete(cacheKey);
-            return _dbStore.Delete(obj);
-        }
-
-        public int Execute(string sql, object param, string cacheKey = null, DateTime? lifeTime = null, bool invalidate = false)
-        {
-            if (invalidate)
-                _cacheManager?.Invalidate(cacheKey);
-            var result = _cacheManager?.Get<int>(cacheKey);
-            if (result == null)
-            {
-                result = _dbStore.Execute(sql, param);
-                _cacheManager?.Add(result, cacheKey, lifeTime);
-            }
-            return result.Value;
-        }
-
-        public int ExecuteScalar(string sql, object param, string cacheKey = null, DateTime? lifeTime = null, bool invalidate = false)
-        {
-            if(invalidate)
-                _cacheManager?.Invalidate(cacheKey);
-            var result = _cacheManager?.Get<int>(cacheKey);
-            if (result == null)
-            {
-                result = _dbStore.ExecuteScalar(sql, param);
-                _cacheManager?.Add(result, cacheKey, lifeTime);
-            }
-            return result.Value;
-        }
-
-        public bool Update<T>(T obj, string cacheKey = null, DateTime? lifeTime = null) where T : class, new()
-        {
-            _cacheManager?.Update(obj, cacheKey, lifeTime);
-            return _dbStore.Update(obj);
-        }
-
-        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
@@ -6,7 +7,7 @@ using Dapper.Contrib.Extensions;
 
 namespace SimpleEssentials.Cache
 {
-    public class MemoryCacheManager : BaseCacheManager
+    public class MemoryCacheManager : ICacheManager
     {
         private readonly MemoryCache _memoryCache;
 
@@ -14,73 +15,110 @@ namespace SimpleEssentials.Cache
         {
             _memoryCache = MemoryCache.Default;
         }
-        public MemoryCacheManager(TimeSpan lifeSpan) : this()
-        {
-            DefaultLifeSpan = lifeSpan;
-        }
 
-        public override void Add<T>(T data, string cacheKey, DateTime? expiration = null)
+        public void Delete(CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
+            if (!CacheHelper.IsKeyValid(cacheSettings.Key))
                 return;
-            if (expiration == null)
-                expiration = DateTime.Now.Add(DefaultLifeSpan);
-            _memoryCache.Add(cacheKey, data, (DateTime)expiration);
+            _memoryCache.Remove(cacheSettings.Key);
         }
 
-        public override void AddHash<T>(IEnumerable<T> data, string cacheKey, DateTime? expiration = null)
+        public void DeleteHash(CacheSettings cacheSettings)
         {
-            var type = data.FirstOrDefault()?.GetType();
-            var properties = type?.GetProperties();
-            foreach (var prop in properties)
+            var keys = (IEnumerable<string>)_memoryCache.Get(cacheSettings.Key + "_KEYS");
+            if (keys == null)
+                return;
+
+            foreach (var key in keys)
             {
-                if (Attribute.IsDefined(prop, typeof(KeyAttribute)))
-                {
-                    //this prop is the key
-                }
+                DeleteSingleHash(cacheSettings, key);
+            }
+
+            _memoryCache.Remove(cacheSettings.Key + "_KEYS");
+        }
+
+        public void DeleteSingleHash(CacheSettings cacheSettings, string fieldKey)
+        {
+            _memoryCache.Remove(cacheSettings.Key + ":" + fieldKey);
+        }
+
+        public T Get<T>(CacheSettings cacheSettings)
+        {
+            if (!CacheHelper.IsKeyValid(cacheSettings.Key))
+                return default(T);
+            return (T)_memoryCache.Get(cacheSettings.Key);
+        }
+
+        public IEnumerable<T> GetHash<T>(CacheSettings cacheSettings)
+        {
+            var keys = (IEnumerable<string>)_memoryCache.Get(cacheSettings.Key + "_KEYS");
+            return keys?.Select(x => GetSingleHash<T>(cacheSettings, x));
+        }
+
+        public IEnumerable<T> GetList<T>(CacheSettings cacheSettings)
+        {
+            if (!CacheHelper.IsKeyValid(cacheSettings.Key))
+                return default(IEnumerable<T>);
+            return (IEnumerable<T>)_memoryCache.Get(cacheSettings.Key);
+        }
+
+        public T GetSingleHash<T>(CacheSettings cacheSettings, string fieldKey)
+        {
+            return (T)_memoryCache.Get(cacheSettings.Key + ":" + fieldKey);
+        }
+
+        public void Insert<T>(T data, CacheSettings cacheSettings)
+        {
+            if (!CacheHelper.IsKeyValid(cacheSettings.Key))
+                return;
+            
+            _memoryCache.Add(cacheSettings.Key, data, CacheHelper.GetExpirationDate(cacheSettings.LifeSpan));
+        }
+
+        public void InsertHash<T>(IEnumerable<T> data, CacheSettings cacheSettings)
+        {
+            var dataList = data as IList<T> ?? data.ToList();
+            var keys = dataList.Select(x => CacheHelper.GetObjectFieldKey(x));
+            _memoryCache.Add(cacheSettings.Key + "_KEYS", keys, CacheHelper.GetExpirationDate(cacheSettings.LifeSpan));
+
+            foreach (var item in dataList)
+            {
+                InsertSingleHash(item, cacheSettings);
             }
         }
 
-        public override void AddHash<T>(T data, string cacheKey, DateTime? expiration = null)
+        public void InsertSingleHash<T>(T data, CacheSettings cacheSettings)
         {
-
+            var key = CacheHelper.GetObjectFieldKey(data);
+            InsertSingleHash(data, cacheSettings, key);
         }
 
-        public override void Update<T>(T data, string cacheKey, DateTime? expiration = null)
+        public void InsertSingleHash<T>(T data, CacheSettings cacheSettings, string fieldKey)
         {
-            if (!KeyValid(cacheKey))
+            if (string.IsNullOrEmpty(fieldKey))
                 return;
-            Add(data, cacheKey, expiration);
+            _memoryCache.Add(cacheSettings.Key + ":" + fieldKey, data, CacheHelper.GetExpirationDate(cacheSettings.LifeSpan));
         }
 
-        public override void Delete(string cacheKey)
+        
+
+        public void Update<T>(T data, CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
+            if (!CacheHelper.IsKeyValid(cacheSettings.Key))
                 return;
-            _memoryCache.Remove(cacheKey);
+            Insert(data, cacheSettings);
         }
 
-        public override T Get<T>(string cacheKey)
+        public void UpdateHash<T>(IEnumerable<T> data, CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
-                return default(T);
-            var data = (T)_memoryCache.Get(cacheKey);
-            return data;
+            DeleteHash(cacheSettings);
+            InsertHash(data, cacheSettings);
         }
 
-        public override IEnumerable<T> GetList<T>(string cacheKey)
+        public void UpdateSingleHash<T>(T data, CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
-                return default(IEnumerable<T>);
-            var data = (IEnumerable<T>)_memoryCache.Get(cacheKey);
-            return data;
-        }
-
-        public override void Invalidate(string cacheKey)
-        {
-            if (!KeyValid(cacheKey))
-                return;
-            Delete(cacheKey);
+            var key = CacheHelper.GetObjectFieldKey(data);
+            InsertSingleHash(data, cacheSettings, key);
         }
     }
 }

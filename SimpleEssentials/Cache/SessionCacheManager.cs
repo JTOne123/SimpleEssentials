@@ -4,77 +4,81 @@ using System.Web;
 
 namespace SimpleEssentials.Cache
 {
-    public class SessionCacheManager : BaseCacheManager
+    public class SessionCacheManager : ICacheManager
     {
-
-        public SessionCacheManager()
+        public void Delete(CacheSettings cacheSettings)
         {
+            throw new NotImplementedException();
         }
 
-        public SessionCacheManager(TimeSpan lifeSpan) : this()
+        public void DeleteHash(CacheSettings cacheSettings)
         {
-            DefaultLifeSpan = lifeSpan;
+            throw new NotImplementedException();
         }
 
-        private static bool HasExpired<T>(SessionObject<T> sessionObj)
+        public void DeleteSingleHash(CacheSettings cacheSettings, string fieldKey)
         {
-            if (sessionObj.Expiration == null)
-                return false;
-
-            return DateTime.Now > sessionObj.Expiration;
+            throw new NotImplementedException();
         }
 
-        public override void Add<T>(T data, string cacheKey, DateTime? expiration = null)
+        public T Get<T>(CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
-                return;
-            var sessionObj = new SessionObject<T>
-            {
-                Data = data,
-                Expiration = expiration
-            };
-            HttpContext.Current?.Session.Add(cacheKey, sessionObj);
+            throw new NotImplementedException();
         }
 
-        public override void Delete(string cacheKey)
+        public IEnumerable<T> GetHash<T>(CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
-                return;
-            HttpContext.Current?.Session.Remove(cacheKey);
+            throw new NotImplementedException();
         }
 
-        public override T Get<T>(string cacheKey)
+        public IEnumerable<T> GetList<T>(CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
-                return default(T);
-            var sessionObj = (SessionObject<T>)HttpContext.Current?.Session[cacheKey];
-            if (sessionObj == null || HasExpired(sessionObj))
-                return default(T);
-            return sessionObj.Data;
+            throw new NotImplementedException();
         }
 
-        public override IEnumerable<T> GetList<T>(string cacheKey)
+        public T GetSingleHash<T>(CacheSettings cacheSettings, string fieldKey)
         {
-            if (!KeyValid(cacheKey))
-                return default(IEnumerable<T>);
-            var sessionObj = (SessionObject<IEnumerable<T>>)HttpContext.Current?.Session[cacheKey];
-            if (sessionObj == null || HasExpired(sessionObj))
-                return null;
-            return sessionObj.Data;
+            throw new NotImplementedException();
         }
 
-        public override void Invalidate(string cacheKey)
+        public void Insert<T>(T data, CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
-                return;
-            Delete(cacheKey);
+            throw new NotImplementedException();
         }
 
-        public override void Update<T>(T data, string cacheKey, DateTime? expiration = null)
+        public void InsertHash<T>(IEnumerable<T> data, CacheSettings cacheSettings)
         {
-            if (!KeyValid(cacheKey))
-                return;
-            Add(data, cacheKey, expiration);
+            throw new NotImplementedException();
+        }
+
+        public void InsertHash<T>(T data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertSingleHash<T>(T data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InsertSingleHash<T>(T data, CacheSettings cacheSettings, string fieldKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update<T>(T data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateHash<T>(IEnumerable<T> data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSingleHash<T>(T data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
         }
     }
 }

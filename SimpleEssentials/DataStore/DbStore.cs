@@ -9,7 +9,7 @@ using FastMember;
 
 namespace SimpleEssentials.DataStore
 {
-    public class DbStore : IDbStore
+    public class DbStore : IDataStore
     {
         private string _connectionString { get; set; }
 

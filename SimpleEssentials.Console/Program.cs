@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Linq.Mapping;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SimpleEssentials.Cache;
 using SimpleEssentials.Console.Models;
+using SimpleEssentials.DataProvider;
+using SimpleEssentials.DataStore;
 using SimpleEssentials.Extensions;
+using SimpleEssentials.Injection;
 using SimpleEssentials.IO.Types;
 using SimpleEssentials.IO;
 using SimpleEssentials.IO.Readers;
@@ -17,15 +23,25 @@ namespace SimpleEssentials.Console
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine("Doing Stuff");
-            using (var progress = new ProgressBar("Doing stuff too"))
+            ContainerHelper.Container.Register<IDataStore>(() => new DbStore(Constants.DbConnectionString()));
+            ContainerHelper.Container.Register<ICacheManager>(() => new MemoryCacheManager());
+            ContainerHelper.Container.Verify();
+
+            var dbProvider = new DbDataProvider();
+
+            
+            for (int j = 0; j < 10; j++)
             {
-                for (int i = 0; i <= 100; i++)
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                for (int i = 0; i < 100000; i++)
                 {
-                    progress.Report((double)i/100);
-                    Thread.Sleep(100);
+                    var results = dbProvider.GetByType<CustomCampaign>(new CacheSettings() { Key = "CAMPAIGNS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
                 }
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                System.Console.WriteLine($"Elapsed Time: {elapsedMs}");
             }
+            
 
 
 

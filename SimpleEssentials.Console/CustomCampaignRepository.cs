@@ -67,7 +67,7 @@ namespace SimpleEssentials.Console
                 CreateDate = DateTime.Now
             };
 
-            return _dbProvider.Add(empCampign, "EMPLOYEE_STATUS");
+            return _dbProvider.Insert(empCampign, new CacheSettings() { Key = "EMPLOYEE_STATUS" });
         }
     }
 }

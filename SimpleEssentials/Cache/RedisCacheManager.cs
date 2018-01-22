@@ -10,68 +10,81 @@ using StackExchange.Redis;
 
 namespace SimpleEssentials.Cache
 {
-    public class RedisCacheManager : BaseCacheManager
+    public class RedisCacheManager : ICacheManager
     {
-        private static Context _context;
-
-        public RedisCacheManager(string serverConfiguration = "localhost:6379")
+        public void Delete(CacheSettings cacheSettings)
         {
-            _context = new Context(serverConfiguration);
+            throw new NotImplementedException();
         }
 
-        public override void Add<T>(T data, string cacheKey, DateTime? expiration = null)
+        public void DeleteHash(CacheSettings cacheSettings)
         {
-            _context.Cache.SetObject(cacheKey, data);
+            throw new NotImplementedException();
         }
 
-        public override void AddHash<T>(IEnumerable<T> data, string cacheKey, DateTime? expiration = null)
+        public void DeleteSingleHash(CacheSettings cacheSettings, string fieldKey)
         {
-            _context.Cache.SetHashed(cacheKey, "", data);
+            throw new NotImplementedException();
         }
 
-        public override void Delete(string cacheKey)
+        public T Get<T>(CacheSettings cacheSettings)
         {
-            _context.Cache.Remove(cacheKey);
+            throw new NotImplementedException();
         }
 
-        public override void DeleteHash(string cacheKey, string fieldKey)
+        public IEnumerable<T> GetHash<T>(CacheSettings cacheSettings)
         {
-            _context.Cache.RemoveHashed(cacheKey, fieldKey);
+            throw new NotImplementedException();
         }
 
-        public override T Get<T>(string cacheKey)
+        public IEnumerable<T> GetList<T>(CacheSettings cacheSettings)
         {
-            return _context.Cache.GetObject<T>(cacheKey);
+            throw new NotImplementedException();
         }
 
-        public override IEnumerable<T> GetList<T>(string cacheKey)
+        public T GetSingleHash<T>(CacheSettings cacheSettings, string fieldKey)
         {
-            return _context.Cache.GetObject<IEnumerable<T>>(cacheKey);
+            throw new NotImplementedException();
         }
 
-        public override T GetHash<T>(string cacheKey, string fieldKey)
+        public void Insert<T>(T data, CacheSettings cacheSettings)
         {
-            return _context.Cache.GetHashed<T>(cacheKey, fieldKey);
+            throw new NotImplementedException();
         }
 
-        public override void Invalidate(string cacheKey)
+        public void InsertHash<T>(IEnumerable<T> data, CacheSettings cacheSettings)
         {
-            Delete(cacheKey);
+            throw new NotImplementedException();
         }
 
-        public override void Update<T>(T data, string cacheKey, DateTime? expiration = null)
+        public void InsertHash<T>(T data, CacheSettings cacheSettings)
         {
-            Add(data, cacheKey, expiration);
-
-            var redis = ConnectionMultiplexer.Connect("");
-            var db = redis.GetDatabase();
+            throw new NotImplementedException();
         }
 
-        public void test()
+        public void InsertSingleHash<T>(T data, CacheSettings cacheSettings)
         {
-            var redis = ConnectionMultiplexer.Connect("");
-            var db = redis.GetDatabase();
+            throw new NotImplementedException();
+        }
 
+        public void InsertSingleHash<T>(T data, CacheSettings cacheSettings, string fieldKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update<T>(T data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateHash<T>(IEnumerable<T> data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSingleHash<T>(T data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
         }
     }
 }

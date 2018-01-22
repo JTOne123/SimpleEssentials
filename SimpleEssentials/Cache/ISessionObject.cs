@@ -6,6 +6,5 @@ namespace SimpleEssentials.Cache
     {
         T Data { get; set; }
         DateTime? Expiration { get; set; }
-
     }
 }

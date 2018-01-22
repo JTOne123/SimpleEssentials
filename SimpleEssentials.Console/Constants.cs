@@ -2,8 +2,8 @@
 {
     public static class Constants
     {
-        private static string DATABASE_NAME = "Starcare";
-        private static string SERVER_NAME = "DESKTOP-SOQBRCU\\SQLEXPRESS";
+        private static string DATABASE_NAME = "sc82_Employee_Portal";
+        private static string SERVER_NAME = "(local)";
 
         private static string DATABASE_USER = "sa";
         private static string DATABASE_PASSWORD = "Haccord02!";

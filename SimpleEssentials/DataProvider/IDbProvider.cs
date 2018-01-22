@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SimpleEssentials.Cache;
 
 namespace SimpleEssentials.DataProvider
 {
     public interface IDbProvider : IDataProvider
     {
-        bool Add<T>(T obj, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
-        int AddAndReturnId<T>(string sql, T obj, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
-        int AddList<T>(IEnumerable<T> obj, string sql, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
-        void BulkInsert<T>(IEnumerable<T> obj, string tableName, string cacheKey = null, DateTime? lifeTime = null, bool invalidateCache = false) where T : class, new();
-        T Get<T>(object id, string cacheKey = null, DateTime? lifeTime = null) where T : class, new();
-        IEnumerable<T> GetByType<T>(string cacheKey = null, DateTime? lifeTime = null) where T : class, new();
-        IEnumerable<T> GetByParameters<T>(string sql, object param, bool forceCache = false, string cacheKey = "", DateTime? lifeTime = null);
-        IEnumerable<T> GetMultiMap<T, T2>(string sql, Func<T, T2, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null);
-        IEnumerable<T> GetMultiMap<T, T2, T3>(string sql, Func<T, T2, T3, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null);
-        IEnumerable<T> GetMultiMap<T, T2, T3, T4>(string sql, Func<T, T2, T3, T4, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null);
-        IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5>(string sql, Func<T, T2, T3, T4, T5, T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null);
-        IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5, T6>(string sql, Func<T, T2, T3, T4, T5, T6,T> func, object param = null, string splitOn = "", string cacheKey = "", DateTime? lifeTime = null);
-        int Execute(string sql, object param, string cacheKey = null, DateTime? lifeTime = null, bool invalidate = false);
-        int ExecuteScalar(string sql, object param, string cacheKey = null, DateTime? lifeTime = null, bool invalidate = false);
-        bool Delete<T>(T obj, string cacheKey = null) where T : class, new();
-        bool Update<T>(T obj, string cacheKey = null, DateTime? lifeTime = null) where T : class, new();
+        bool Insert<T>(T data, CacheSettings cacheSettings, bool invalidateCache = false) where T : class, new();
+        int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new();
+        int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
+        void BulkInsert<T>(IEnumerable<T> data, string tableName, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
+        bool Update<T>(T data, CacheSettings cacheSettings = null) where T : class, new();
+        bool Delete<T>(T data, CacheSettings cacheSettings = null, string fieldKey = null) where T : class, new();
+        int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false);
+        int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false);
+        T Get<T>(object id, CacheSettings cacheSettings = null) where T : class, new();
+        //T Get<T>(object id, CacheSettings cacheSettings, string fieldKey) where T : class, new();
+        IEnumerable<T> GetByType<T>(CacheSettings cacheSettings = null) where T : class, new();
+        IEnumerable<T> GetByParameters<T>(string sql, object param, CacheSettings cacheSettings = null);
+        IEnumerable<T> GetMultiMap<T, T2>(string sql, Func<T, T2, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null);
+        IEnumerable<T> GetMultiMap<T, T2, T3>(string sql, Func<T, T2, T3, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null);
+        IEnumerable<T> GetMultiMap<T, T2, T3, T4>(string sql, Func<T, T2, T3, T4, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null);
+        IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5>(string sql, Func<T, T2, T3, T4, T5, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null);
+        IEnumerable<T> GetMultiMap<T, T2, T3, T4, T5, T6>(string sql, Func<T, T2, T3, T4, T5, T6, T> func, object param = null, string splitOn = "", CacheSettings cacheSettings = null);
     }
 }
