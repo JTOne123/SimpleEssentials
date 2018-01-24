@@ -39,9 +39,15 @@ namespace SimpleEssentials.Cache
             LifeSpan = lifeSpan;
         }
 
+        public CacheSettings(string key, TimeSpan lifeSpan, CacheStorage storageType) : this(key, storageType, lifeSpan)
+        {
+        }
+
         public CacheSettings(string key, CacheStorage storageType, TimeSpan lifeSpan) : this(key, lifeSpan)
         {
             StorageType = storageType;
         }
+
+        
     }
 }
