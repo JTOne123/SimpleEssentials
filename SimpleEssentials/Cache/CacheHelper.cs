@@ -42,9 +42,9 @@ namespace SimpleEssentials.Cache
             //    select prop.GetValue(obj).ToString()).FirstOrDefault();
         }
 
-        public static DateTime GetExpirationDate(TimeSpan? lifeSpan)
+        public static DateTime GetExpirationDate(TimeSpan lifeSpan)
         {
-            return DateTime.Now.Add(lifeSpan ?? new TimeSpan(0, 2, 0, 0));
+            return DateTime.Now.Add(lifeSpan);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SimpleEssentials.DataProvider
 {
     public interface IDbProvider : IDataProvider
     {
-        bool Insert<T>(T data, CacheSettings cacheSettings, bool invalidateCache = false) where T : class, new();
+        bool Insert<T>(T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
         int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new();
         int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
         void BulkInsert<T>(IEnumerable<T> data, string tableName, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();

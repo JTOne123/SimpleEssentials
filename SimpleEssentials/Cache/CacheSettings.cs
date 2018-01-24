@@ -9,6 +9,7 @@ namespace SimpleEssentials.Cache
     public class CacheSettings
     {
         private CacheStorage? _storageType;
+        private TimeSpan? _lifeSpan;
 
         public string Key { get; set; }
         public CacheStorage StorageType
@@ -16,6 +17,31 @@ namespace SimpleEssentials.Cache
             get => _storageType ?? CacheStorage.Normal;
             set => _storageType = value;
         }
-        public TimeSpan? LifeSpan { get; set; }
+
+        public TimeSpan LifeSpan
+        {
+            get => _lifeSpan ?? new TimeSpan(0, 2, 0, 0);
+            set => _lifeSpan = value;
+        }
+
+        public CacheSettings()
+        {
+            
+        }
+
+        public CacheSettings(string key)
+        {
+            Key = key;
+        }
+
+        public CacheSettings(string key, TimeSpan lifeSpan) : this(key)
+        {
+            LifeSpan = lifeSpan;
+        }
+
+        public CacheSettings(string key, CacheStorage storageType, TimeSpan lifeSpan) : this(key, lifeSpan)
+        {
+            StorageType = storageType;
+        }
     }
 }

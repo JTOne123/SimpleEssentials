@@ -173,7 +173,7 @@ namespace SimpleEssentials.DataProvider
 
         private void InsertIntoCache<T>(T data, CacheSettings cacheSettings)
         {
-            if (cacheSettings?.LifeSpan == null) return;
+            if (cacheSettings == null) return;
 
             switch (cacheSettings.StorageType)
             {
@@ -190,7 +190,7 @@ namespace SimpleEssentials.DataProvider
 
         private void InsertListIntoCache<T>(IEnumerable<T> data, CacheSettings cacheSettings)
         {
-            if (cacheSettings?.LifeSpan == null) return;
+            if (cacheSettings == null) return;
 
             switch (cacheSettings.StorageType)
             {
@@ -207,7 +207,7 @@ namespace SimpleEssentials.DataProvider
 
         private void DeleteFromCache(CacheSettings cacheSettings, string fieldKey = null)
         {
-            if (cacheSettings?.LifeSpan == null) return;
+            if (cacheSettings == null) return;
 
             switch (cacheSettings.StorageType)
             {
@@ -227,7 +227,7 @@ namespace SimpleEssentials.DataProvider
 
         private T GetFromCache<T>(CacheSettings cacheSettings, string fieldKey)
         {
-            if (cacheSettings?.LifeSpan == null) return default(T);
+            if (cacheSettings == null) return default(T);
 
             switch (cacheSettings.StorageType)
             {
@@ -242,7 +242,7 @@ namespace SimpleEssentials.DataProvider
 
         private IEnumerable<T> GetListFromCache<T>(CacheSettings cacheSettings)
         {
-            if (cacheSettings?.LifeSpan == null) return default(IEnumerable<T>);
+            if (cacheSettings == null) return default(IEnumerable<T>);
 
             switch (cacheSettings.StorageType)
             {
@@ -257,7 +257,7 @@ namespace SimpleEssentials.DataProvider
 
         private void UpdateCache<T>(T data, CacheSettings cacheSettings)
         {
-            if (cacheSettings?.LifeSpan == null) return;
+            if (cacheSettings == null) return;
 
             switch (cacheSettings.StorageType)
             {
