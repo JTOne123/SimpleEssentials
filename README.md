@@ -2,20 +2,72 @@
 
 Simple library that wraps other useful libraries. It's purpose is to speed up your development time.
 
-## Getting Started
+## DbDataProvider
 
-WORK-IN-PROGRESS
+Gives you an easy way to map SQL data to strongly typed objects. Also provides an easy cache management if a cache is necessary.
+
+### Initialization
+
+DbDataProvider can be initialized two ways:
+* Pass IDataStore and ICacheManager instances
+* Inject the dependencies
+
+```C#
+var dbProvider = new DbDataProvider(new DbStore("[CONTECTION_STRING]"), new MemoryCacheManager());
+```
+
+```C#
+//Somewhere in App_Start
+ContainerHelper.Container.Register<IDataStore>(() => new DbStore("[CONTECTION_STRING]"));
+ContainerHelper.Container.Register<ICacheManager>(() => new MemoryCacheManager());
+ContainerHelper.Container.Verify();
+
+//Somewhere else in project
+var dbProvider = new DbDataProvider();
+```
+You can override the injected values by initializing the DbDataProvider with the proper objects.
+
 
 ### Usage
+* Insert
+* InsertList
+* InsertAndReturnId
+* BulkInsert
+* Update
+* Delete
+* Execute
+* ExecuteScalar
+* Get
+* GetByType
+* GetByParameters
+* GetMultiMap
 
-WORK-IN-PROGRESS
 
+#### Insert
+
+Inserts a single object into the database
+
+```C#
+bool Insert<T>(T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
 ```
-WORK-IN-PROGRESS
+returns true if successful, false if not.
+
+#### InsertList
+
+Inserts a list into the database.
+
+```C#
+int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new();
 ```
+returns records inserted.
 
-WORK-IN-PROGRESS
+#### InsertAndReturnId
+Insert a single oject into the database and return the new rows ID.
 
+```C#
+int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
+```
+returns ID of the new record.
 
 ## Built With
 
