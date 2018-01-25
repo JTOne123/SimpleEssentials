@@ -1,6 +1,6 @@
 # SimpleEssentials
 
-Simple library that wraps other useful nuget packages. It's purpose is to speed up your development time.
+Simple library that wraps other useful libraries. It's purpose is to speed up your development time.
 
 ## Getting Started
 
