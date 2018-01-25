@@ -24,7 +24,7 @@ namespace SimpleEssentials.IO
             var finalpath = Path.GetDirectoryName(filePath) + System.IO.Path.DirectorySeparatorChar + path;
             System.IO.Directory.CreateDirectory(finalpath);
             var finalResult = System.IO.Path.GetDirectoryName(finalpath);
-            return new Folder(finalResult);
+            return new Folder(finalpath);
         }
 
         public IFolder Create(string path, IFolder parent)
