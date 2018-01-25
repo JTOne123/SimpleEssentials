@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IO;
-using System.Threading;
 using SimpleEssentials.Cache;
 using SimpleEssentials.DataStore;
-using SimpleEssentials.Injection;
 
 namespace SimpleEssentials.DataProvider
 {
@@ -17,8 +12,8 @@ namespace SimpleEssentials.DataProvider
 
         public DbDataProvider()
         {
-            _dataStore = ContainerHelper.Container.GetInstance<IDataStore>();
-            _cacheManager = ContainerHelper.Container.GetInstance<ICacheManager>();
+            _dataStore = Factory.Container.GetInstance<IDataStore>();
+            _cacheManager = Factory.Container.GetInstance<ICacheManager>();
         }
 
         public DbDataProvider(IDataStore dataStore, ICacheManager cacheManager)

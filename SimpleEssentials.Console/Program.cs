@@ -10,8 +10,8 @@ using SimpleEssentials.Cache;
 using SimpleEssentials.Console.Models;
 using SimpleEssentials.DataProvider;
 using SimpleEssentials.DataStore;
+using SimpleEssentials.Diagnostics;
 using SimpleEssentials.Extensions;
-using SimpleEssentials.Injection;
 using SimpleEssentials.IO.Types;
 using SimpleEssentials.IO;
 using SimpleEssentials.IO.Readers;
@@ -23,11 +23,18 @@ namespace SimpleEssentials.Console
     {
         static void Main(string[] args)
         {
-            ContainerHelper.Container.Register<IDataStore>(() => new DbStore(Constants.DbConnectionString()));
-            ContainerHelper.Container.Register<ICacheManager>(() => new MemoryCacheManager());
-            ContainerHelper.Container.Verify();
+            //Factory.RegisterDefaults();
+            //Factory.Container.Register<IDataStore>(() => new DbStore(Constants.DbConnectionString()));
+            //Factory.Container.Register<ICacheManager>(() => new MemoryCacheManager());
+            //Factory.Container.Register<ILogFileHandler>(() => new LogFileByDateHandler());
+            //Factory.Container.Verify();
 
-            var dbProvider = new DbDataProvider();
+
+            Factory.Log.Info("Just a test log");
+
+            //var dbProvider = new DbDataProvider();
+
+            //var dbProvider = new DbDataProvider(new DbStore("[CONTECTION_STRING]"), new MemoryCacheManager());
 
 
             //for (int j = 0; j < 10; j++)
@@ -44,20 +51,20 @@ namespace SimpleEssentials.Console
 
             //Thread.Sleep(10000);
 
-            for (int j = 0; j < 10; j++)
-            {
-                var watch = System.Diagnostics.Stopwatch.StartNew();
-                for (int i = 0; i < 1000; i++)
-                {
-                    var results = dbProvider.GetByType<CustomCampaignEmployee>(new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
-                    var emp = dbProvider.Get<CustomCampaignEmployee>("  1509394", new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
-                    //var emp = results.FirstOrDefault(x => x.Employee_Id == "  1509394");
-                    //System.Console.WriteLine($"Employee: {emp.Employee_Id}");
-                }
-                watch.Stop();
-                var elapsedMs = watch.ElapsedMilliseconds;
-                System.Console.WriteLine($"Elapsed Time: {elapsedMs}");
-            }
+            //for (int j = 0; j < 10; j++)
+            //{
+            //    var watch = System.Diagnostics.Stopwatch.StartNew();
+            //    for (int i = 0; i < 1000; i++)
+            //    {
+            //        var results = dbProvider.GetByType<CustomCampaignEmployee>(new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
+            //        var emp = dbProvider.Get<CustomCampaignEmployee>("  1509394", new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
+            //        //var emp = results.FirstOrDefault(x => x.Employee_Id == "  1509394");
+            //        //System.Console.WriteLine($"Employee: {emp.Employee_Id}");
+            //    }
+            //    watch.Stop();
+            //    var elapsedMs = watch.ElapsedMilliseconds;
+            //    System.Console.WriteLine($"Elapsed Time: {elapsedMs}");
+            //}
 
 
 
