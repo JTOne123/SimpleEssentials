@@ -13,14 +13,14 @@ DbDataProvider can be initialized two ways:
 * Inject the dependencies
 
 ```C#
-var dbProvider = new DbDataProvider(new DbStore("[CONTECTION_STRING]"), new MemoryCacheManager());
+var dbProvider = new DbDataProvider(new DbStore("[CONNECTION_STRING]"), new MemoryCacheManager());
 ```
 
 ```C#
 //Somewhere in App_Start
-ContainerHelper.Container.Register<IDataStore>(() => new DbStore("[CONTECTION_STRING]"));
-ContainerHelper.Container.Register<ICacheManager>(() => new MemoryCacheManager());
-ContainerHelper.Container.Verify();
+Factory.Container.Register<IDataStore>(() => new DbStore("[CONNECTION_STRING]"));
+Factory.Container.Register<ICacheManager>(() => new MemoryCacheManager());
+Factory.Container.Verify();
 
 //Somewhere else in project
 var dbProvider = new DbDataProvider();
