@@ -4,7 +4,7 @@ Simple library that wraps other useful libraries. It's purpose is to speed up yo
 
 ## DbDataProvider
 
-Gives you an easy way to map SQL data to strongly typed objects. Also provides an easy cache management if a cache is necessary.
+Gives you an easy way to map SQL data to strongly typed objects. Also provides easy cache management if a cache is necessary.
 
 ### Initialization
 
