@@ -10,12 +10,11 @@ Gives you an easy way to map SQL data to strongly typed objects. Also provides e
 
 DbDataProvider can be initialized two ways:
 * Pass IDataStore and ICacheManager instances
-* Inject the dependencies
-
 ```C#
 var dbProvider = new DbDataProvider(new DbStore("[CONNECTION_STRING]"), new MemoryCacheManager());
 ```
 
+* Inject the dependencies
 ```C#
 //Somewhere in App_Start
 Factory.Container.Register<IDataStore>(() => new DbStore("[CONNECTION_STRING]"));
