@@ -89,4 +89,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Many thanks to my friend Joseoh (https://github.com/TheMofaDe) who has helped me with design patterns
+* Many thanks to my friend Joseph (https://github.com/TheMofaDe) who has helped me with design patterns
