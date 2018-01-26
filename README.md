@@ -70,7 +70,7 @@ returns true if successful, false if not.
 Inserts a list into the database. Will cache results if cacheSettings are provided.
 
 ```C#
-int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null);
+int InsertList<T>(IEnumerable<T> data, CacheSettings cacheSettings = null);
 ```
 ```C#
 var campaigns = new List<CustomCampaign>()
