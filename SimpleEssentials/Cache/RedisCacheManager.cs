@@ -29,6 +29,11 @@ namespace SimpleEssentials.Cache
             throw new NotImplementedException();
         }
 
+        public T GetData<T>(CacheSettings cacheSettings, string fieldKey = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<T> GetHash<T>(CacheSettings cacheSettings)
         {
             throw new NotImplementedException();
@@ -80,6 +85,11 @@ namespace SimpleEssentials.Cache
         }
 
         public void UpdateSingleHash<T>(T data, CacheSettings cacheSettings)
+        {
+            throw new NotImplementedException();
+        }
+
+        CacheObject ICacheManager.Get(CacheSettings cacheSettings)
         {
             throw new NotImplementedException();
         }

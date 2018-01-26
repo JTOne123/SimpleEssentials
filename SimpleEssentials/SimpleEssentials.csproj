@@ -72,10 +72,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\CacheHelper.cs" />
+    <Compile Include="Cache\CacheObject.cs" />
+    <Compile Include="Cache\CacheObjectType.cs" />
     <Compile Include="Cache\CacheSettings.cs" />
     <Compile Include="Cache\CacheStorage.cs" />
     <Compile Include="Cache\ICacheable.cs" />
     <Compile Include="Cache\ICacheManager.cs" />
+    <Compile Include="Cache\ICacheObject.cs" />
     <Compile Include="Cache\ICacheType.cs" />
     <Compile Include="Cache\ICustomCacheObject.cs" />
     <Compile Include="Cache\ISessionObject.cs" />

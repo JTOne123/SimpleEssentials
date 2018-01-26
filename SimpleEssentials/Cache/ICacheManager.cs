@@ -15,7 +15,9 @@ namespace SimpleEssentials.Cache
         void Delete(CacheSettings cacheSettings);
         void DeleteHash(CacheSettings cacheSettings);
         void DeleteSingleHash(CacheSettings cacheSettings, string fieldKey);
-        T Get<T>(CacheSettings cacheSettings);
+        //T Get<T>(CacheSettings cacheSettings);
+        CacheObject Get(CacheSettings cacheSettings);
+        T GetData<T>(CacheSettings cacheSettings, string fieldKey = null);
         T GetSingleHash<T>(CacheSettings cacheSettings, string fieldKey);
         IEnumerable<T> GetList<T>(CacheSettings cacheSettings);
         IEnumerable<T> GetHash<T>(CacheSettings cacheSettings);
