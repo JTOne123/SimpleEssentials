@@ -57,10 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="CustomCampaignRepository.cs" />
     <Compile Include="Models\CustomCampaign.cs" />
-    <Compile Include="Models\CustomCampaignEmployee.cs" />
-    <Compile Include="Models\CustomCampaignStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
