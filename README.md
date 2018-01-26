@@ -27,7 +27,7 @@ var dbProvider = new DbDataProvider();
 You can override the injected values by initializing the DbDataProvider with the proper objects.
 
 
-### Usage
+### Methods
 * Insert
 * InsertList
 * InsertAndReturnId
@@ -42,7 +42,7 @@ You can override the injected values by initializing the DbDataProvider with the
 * GetMultiMap
 
 
-#### Insert
+### Insert
 
 Inserts a single object into the database. Will cache results if cacheSettings are provided.
 
@@ -60,7 +60,7 @@ var success = dbProvider.Insert(campaign);
 ```
 returns true if successful, false if not.
 
-#### InsertList
+### InsertList
 
 Inserts a list into the database. Will cache results if cacheSettings are provided.
 
@@ -78,7 +78,7 @@ var rowsAffected = dbProvider.InsertList(campaigns);
 ```
 returns records inserted.
 
-#### InsertAndReturnId
+### InsertAndReturnId
 Insert a single oject into the database and return the new rows ID. Will cache results if cacheSettings are provided.
 
 ```C#
@@ -95,10 +95,10 @@ var returnId = dbProvider.InsertAndReturnId(campaign);
 ```
 returns ID of the new record.
 
-#### BulkInsert
+### BulkInsert
 Currently has issues, will document once fixed
 
-#### Update
+### Update
 Update a single record in the database and cache if cacheSettings are provided
 
 ```C#
@@ -111,7 +111,7 @@ var success = dbProvider.Update(customCampaign);
 ```
 returns true is successful, false if not.
 
-#### Delete
+### Delete
 Delete a single record in the database and cache if cacheSettings are provided
 
 ```C#
@@ -123,7 +123,7 @@ var success = dbProvider.Delete(customCampaign);
 ```
 returns true is successful, false if not.
 
-#### Execute
+### Execute
 Execute a SQL statement. Will cache results if cacheSettings are provided.
 
 ```C#
@@ -134,7 +134,7 @@ int Execute(string sql, object param, CacheSettings cacheSettings = null, bool i
 ```
 returns rows affected
 
-#### ExecuteScalar
+### ExecuteScalar
 Execute a scalar SQL statement. Will cache results if cacheSettings are provided.
 
 ```C#
@@ -145,7 +145,7 @@ int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, 
 ```
 returns rows affected
 
-#### Get
+### Get
 Gets a single record from the database by id and maps it to a strongly typed object. Will cache results if cacheSettings are provided.
 
 ```C#
@@ -156,7 +156,7 @@ var customCampaign = dbProvider.Get<CustomCampaign>(1);
 ```
 returns strongly typed object from the data. Null if it was not found.
 
-#### GetByType
+### GetByType
 Gets all records in a table.
 
 ```C#
