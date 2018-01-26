@@ -15,7 +15,12 @@ namespace SimpleEssentials.LinqToSQL
     {
         public static string InsertAndReturnIdSql<T>(T obj)
         {
-            return $"insert into {obj.GetTableName()}{GenerateInsertColumnNames(obj)} select cast(scope_identity() as int)";
+            return $"{InsertSql(obj)} select cast(scope_identity() as int)";
+        }
+
+        public static string InsertSql<T>(T obj, Type overrideType = null)
+        {
+            return $"insert into {obj.GetTableName(overrideType)}{GenerateInsertColumnNames(obj, overrideType)}";
         }
 
         public static string WhereSql<T>(T obj)
@@ -23,9 +28,9 @@ namespace SimpleEssentials.LinqToSQL
             throw new NotImplementedException();
         }
 
-        private static string GenerateInsertColumnNames(object obj)
+        private static string GenerateInsertColumnNames(object obj, Type overrideType = null)
         {
-            var nonIdProps = obj.GetNonIdentityProperties();
+            var nonIdProps = obj.GetNonIdentityProperties(overrideType);
             var finalString = "(";
             for (var i = 0; i < nonIdProps.Count; i++)
             {

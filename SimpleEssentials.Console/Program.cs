@@ -23,59 +23,21 @@ namespace SimpleEssentials.Console
     {
         static void Main(string[] args)
         {
-            //Factory.RegisterDefaults();
             Factory.Container.Register<IDataStore>(() => new DbStore(Constants.DbConnectionString()));
             Factory.Container.Register<ICacheManager>(() => new MemoryCacheManager());
-            //Factory.Container.Register<ILogFileHandler>(() => new LogFileByDateHandler());
-            //Factory.Container.Verify();
 
 
             Factory.Log.Info("Just a test log");
 
             var dbProvider = new DbDataProvider();
-            var campaign = new CustomCampaign()
+            var campaigns = new List<CustomCampaign>()
             {
-                CreateDate = DateTime.Now,
-                Description = "Testing Linq 2 SQL",
-                Name = "Testing 123"
+                new CustomCampaign() {Description = "Desc1", Name = "Test1"},
+                new CustomCampaign() {Description = "Desc2", Name = "Test2"},
+                new CustomCampaign() {Description = "Desc3", Name = "Test3"},
             };
-            var returnId = dbProvider.InsertAndReturnId("", campaign);
-            System.Console.WriteLine(returnId);
-
-            //var dbProvider = new DbDataProvider(new DbStore("[CONTECTION_STRING]"), new MemoryCacheManager());
-
-
-            //for (int j = 0; j < 10; j++)
-            //{
-            //    var watch = System.Diagnostics.Stopwatch.StartNew();
-            //    for (int i = 0; i < 100000; i++)
-            //    {
-            //        var results = dbProvider.GetByType<CustomCampaign>(new CacheSettings() { Key = "CAMPAIGNS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
-            //    }
-            //    watch.Stop();
-            //    var elapsedMs = watch.ElapsedMilliseconds;
-            //    System.Console.WriteLine($"Elapsed Time: {elapsedMs}");
-            //}
-
-            //Thread.Sleep(10000);
-
-            //for (int j = 0; j < 10; j++)
-            //{
-            //    var watch = System.Diagnostics.Stopwatch.StartNew();
-            //    for (int i = 0; i < 1000; i++)
-            //    {
-            //        var results = dbProvider.GetByType<CustomCampaignEmployee>(new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
-            //        var emp = dbProvider.Get<CustomCampaignEmployee>("  1509394", new CacheSettings() { Key = "EMPLOYEE_CAMPAINS", LifeSpan = (new TimeSpan(0, 1, 0, 0)), StorageType = CacheStorage.Hashed });
-            //        //var emp = results.FirstOrDefault(x => x.Employee_Id == "  1509394");
-            //        //System.Console.WriteLine($"Employee: {emp.Employee_Id}");
-            //    }
-            //    watch.Stop();
-            //    var elapsedMs = watch.ElapsedMilliseconds;
-            //    System.Console.WriteLine($"Elapsed Time: {elapsedMs}");
-            //}
-
-
-
+            var rowsAffected = dbProvider.InsertList(campaigns);
+            System.Console.WriteLine(rowsAffected);
 
 
             System.Console.WriteLine("Press Enter to Exit");

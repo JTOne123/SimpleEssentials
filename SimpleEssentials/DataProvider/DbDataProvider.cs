@@ -163,6 +163,13 @@ namespace SimpleEssentials.DataProvider
             return _dataStore.AddAndReturnId(sql, data);
         }
 
+        public int InsertList<T>(IEnumerable<T> data, CacheSettings cacheSettings = null) where T : class, new()
+        {
+            var insertSql = LinqToSQL.Generator.InsertSql(data, typeof(T));
+            _cacheManager?.Insert(data, cacheSettings);
+            return _dataStore.AddList(data, insertSql);
+        }
+
         public int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new()
         {
             _cacheManager?.Insert(data, cacheSettings);

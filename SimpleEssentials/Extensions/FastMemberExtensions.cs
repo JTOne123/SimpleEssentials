@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,9 @@ namespace SimpleEssentials.Extensions
 {
     public static class FastMemberExtensions
     {
-        public static string GetTableName(this object obj)
+        public static string GetTableName(this object obj, Type overrideType = null)
         {
-            var type = obj.GetType();
+            Type type = overrideType ?? obj.GetType();
             string name;
             var tableAttr = type
 #if NETSTANDARD1_3
@@ -53,9 +54,9 @@ namespace SimpleEssentials.Extensions
             return member.Name.ToLower() == "id";
         }
 
-        public static List<Member> GetNonIdentityProperties(this object obj)
+        public static List<Member> GetNonIdentityProperties(this object obj, Type overrideType = null)
         {
-            var type = obj.GetType();
+            var type = overrideType ?? obj.GetType();
 
             var accessor = TypeAccessor.Create(type, true);
 
