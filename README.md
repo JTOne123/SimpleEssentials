@@ -1,6 +1,11 @@
 # SimpleEssentials
 
-Simple library that wraps other useful libraries. It's purpose is to speed up your development time.
+Simple library that wraps other useful libraries. It's purpose is to speed up development time.
+### Features
+* Lightweight ORM
+* Caching
+* IO File Management
+* Logging
 
 ## DbDataProvider
 
