@@ -62,7 +62,6 @@ namespace SimpleEssentials.Cache
                 return default(T);
 
             return (T)cacheObj.Data;
-            //return (CacheObject)_memoryCache.Get(cacheSettings.Key);
         }
 
         public IEnumerable<T> GetHash<T>(CacheSettings cacheSettings)
