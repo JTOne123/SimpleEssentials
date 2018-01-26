@@ -154,6 +154,17 @@ returns rows affected
 Gets a single record from the database by id and maps it to a strongly typed object. Will cache results if cacheSettings are provided.
 
 ```C#
+IEnumerable<T> Get<T>(Expression<Func<T, bool>> expression, CacheSettings cacheSettings = null)
+```
+```C#
+var campaigns = dbProvider.Get<CustomCampaign>(x => x.CreateDate >= DateTime.Now.AddDays(-5));
+```
+returns a list of objects that meets the expression. 
+
+### Get
+Gets a single record from the database by id and maps it to a strongly typed object. Will cache results if cacheSettings are provided.
+
+```C#
 T Get<T>(object id, CacheSettings cacheSettings = null)
 ```
 ```C#
