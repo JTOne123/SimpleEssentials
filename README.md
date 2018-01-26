@@ -47,9 +47,19 @@ You can override the injected values by initializing the DbDataProvider with the
 Inserts a single object into the database
 
 ```C#
-bool Insert<T>(T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
+bool Insert<T>(T data, CacheSettings cacheSettings = null)
 ```
 returns true if successful, false if not.
+
+```C#
+var campaign = new CustomCampaign()
+  {
+      Description = "Just a test campaign",
+      Name = "Github"
+  };
+dbProvider.Insert(campaign);
+
+```
 
 #### InsertList
 
@@ -60,13 +70,33 @@ int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings =
 ```
 returns records inserted.
 
+```C#
+var campaigns = new List<CustomCampaign>()
+  {
+      new CustomCampaign() {Description = "Desc1", Name = "Test1"},
+      new CustomCampaign() {Description = "Desc2", Name = "Test2"},
+      new CustomCampaign() {Description = "Desc3", Name = "Test3"},
+  };
+var rowsAffected = dbProvider.InsertList(campaigns);
+```
+
 #### InsertAndReturnId
 Insert a single oject into the database and return the new rows ID.
 
 ```C#
-int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new();
+int InsertAndReturnId<T>(T data, CacheSettings cacheSettings = null)
 ```
 returns ID of the new record.
+
+```C#
+var campaign = new CustomCampaign()
+  {
+      Description = "Just a test campaign",
+      Name = "Github"
+  };
+var returnId = dbProvider.InsertAndReturnId(campaign);
+
+```
 
 ## Built With
 
