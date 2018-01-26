@@ -37,6 +37,7 @@ namespace SimpleEssentials.Console
                 new CustomCampaign() {Description = "Desc3", Name = "Test3"},
             };
             var rowsAffected = dbProvider.InsertList(campaigns);
+            var campaings = dbProvider.GetByType<CustomCampaign>();
             System.Console.WriteLine(rowsAffected);
 
 
