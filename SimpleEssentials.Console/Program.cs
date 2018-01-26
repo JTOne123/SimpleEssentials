@@ -25,20 +25,9 @@ namespace SimpleEssentials.Console
         {
             Factory.Container.Register<IDataStore>(() => new DbStore(Constants.DbConnectionString()));
             Factory.Container.Register<ICacheManager>(() => new MemoryCacheManager());
-
-
-            Factory.Log.Info("Just a test log");
-
             var dbProvider = new DbDataProvider();
-            var campaigns = new List<CustomCampaign>()
-            {
-                new CustomCampaign() {Description = "Desc1", Name = "Test1"},
-                new CustomCampaign() {Description = "Desc2", Name = "Test2"},
-                new CustomCampaign() {Description = "Desc3", Name = "Test3"},
-            };
-            var rowsAffected = dbProvider.InsertList(campaigns);
-            var campaings = dbProvider.GetByType<CustomCampaign>();
-            System.Console.WriteLine(rowsAffected);
+
+            var campaigns = dbProvider.Get<CustomCampaign>(x => x.CreateDate >= DateTime.Now.AddDays(-5) && !x.Test);
 
 
             System.Console.WriteLine("Press Enter to Exit");

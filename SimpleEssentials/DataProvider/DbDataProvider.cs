@@ -1,7 +1,9 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using SimpleEssentials.Cache;
 using SimpleEssentials.DataStore;
 
@@ -68,6 +70,17 @@ namespace SimpleEssentials.DataProvider
             if (results != null) return results;
 
             results = _dataStore.Get<T>(id);
+            _cacheManager?.Insert(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> Get<T>(Expression<Func<T, bool>> expression, CacheSettings cacheSettings = null) where T : class, new()
+        {
+            var results = _cacheManager?.GetData<IEnumerable<T>>(cacheSettings);
+            if (results != null) return results;
+
+            var whereClause = LinqToSQL.Generator.WhereSql(expression);
+            results = _dataStore.GetByParameters<T>(whereClause.Sql, whereClause.Parameters);
             _cacheManager?.Insert(results, cacheSettings);
             return results;
         }
