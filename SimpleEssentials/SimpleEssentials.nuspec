@@ -8,7 +8,8 @@
     <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initital Complete Build</releaseNotes>
+	<projectUrl>https://github.com/ksuarez2/SimpleEssentials</projectUrl>
+    <releaseNotes>Update how caching is handled</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>Productivity Essentials</tags>
   </metadata>
