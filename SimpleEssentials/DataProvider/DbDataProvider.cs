@@ -22,9 +22,15 @@ namespace SimpleEssentials.DataProvider
             _cacheManager = cacheManager;
         }
 
-        public void BulkInsert<T>(IEnumerable<T> data, string tableName, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new()
+        public void BulkInsert<T>(IEnumerable<T> data, string tableName, CacheSettings cacheSettings = null) where T : class, new()
         {
-            InsertListIntoCache(data, cacheSettings);
+            var cacheData = GetListFromCache<T>(cacheSettings);
+            if(cacheData != null)
+                DeleteFromCache(cacheSettings);
+            else
+                InsertListIntoCache(data, cacheSettings);
+
+
             _dataStore.BulkInsert(data, tableName);
         }
 
@@ -34,8 +40,11 @@ namespace SimpleEssentials.DataProvider
            return _dataStore.Delete(data);
         }
 
-        public int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false)
+        public int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidateCache = false)
         {
+            if (invalidateCache)
+                DeleteFromCache(cacheSettings);
+
             var results = GetFromCache<int>(cacheSettings, sql);
             if (results != 0) return results;
 
@@ -44,8 +53,11 @@ namespace SimpleEssentials.DataProvider
             return results;
         }
 
-        public int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, bool invalidate = false)
+        public int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, bool invalidateCache = false)
         {
+            if (invalidateCache)
+                DeleteFromCache(cacheSettings);
+
             var results = GetFromCache<int>(cacheSettings, sql);
             if (results != 0) return results;
 
@@ -136,21 +148,23 @@ namespace SimpleEssentials.DataProvider
             return results;
         }
 
-        public bool Insert<T>(T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new()
+        public bool Insert<T>(T data, CacheSettings cacheSettings = null) where T : class, new()
         {
-            if(invalidateCache)
+            var cacheData = GetFromCache<T>(cacheSettings);
+            if (cacheData != null)
                 DeleteFromCache(cacheSettings);
-
-            InsertIntoCache(data, cacheSettings);
+            else
+                InsertIntoCache(data, cacheSettings);
             return _dataStore.Add(data);
         }
 
-        public int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null, bool invalidateCache = false) where T : class, new()
+        public int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null) where T : class, new()
         {
-            if (invalidateCache)
+            var cacheData = GetFromCache<T>(cacheSettings);
+            if (cacheData != null)
                 DeleteFromCache(cacheSettings);
-
-            InsertIntoCache(data, cacheSettings);
+            else
+                InsertIntoCache(data, cacheSettings);
             return _dataStore.AddAndReturnId(sql, data);
         }
 
@@ -220,7 +234,7 @@ namespace SimpleEssentials.DataProvider
             }
         }
 
-        private T GetFromCache<T>(CacheSettings cacheSettings, string fieldKey)
+        private T GetFromCache<T>(CacheSettings cacheSettings, string fieldKey = null)
         {
             if (cacheSettings == null) return default(T);
 
