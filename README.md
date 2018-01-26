@@ -44,7 +44,7 @@ You can override the injected values by initializing the DbDataProvider with the
 
 #### Insert
 
-Inserts a single object into the database
+Inserts a single object into the database. Will cache results if cacheSettings are provided.
 
 ```C#
 bool Insert<T>(T data, CacheSettings cacheSettings = null)
@@ -62,7 +62,7 @@ returns true if successful, false if not.
 
 #### InsertList
 
-Inserts a list into the database.
+Inserts a list into the database. Will cache results if cacheSettings are provided.
 
 ```C#
 int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null);
@@ -79,7 +79,7 @@ var rowsAffected = dbProvider.InsertList(campaigns);
 returns records inserted.
 
 #### InsertAndReturnId
-Insert a single oject into the database and return the new rows ID.
+Insert a single oject into the database and return the new rows ID. Will cache results if cacheSettings are provided.
 
 ```C#
 int InsertAndReturnId<T>(T data, CacheSettings cacheSettings = null)
@@ -94,6 +94,78 @@ var returnId = dbProvider.InsertAndReturnId(campaign);
 
 ```
 returns ID of the new record.
+
+#### BulkInsert
+Currently has issues, will document once fixed
+
+#### Update
+Update a single record in the database and cache if cacheSettings are provided
+
+```C#
+bool Update<T>(T data, CacheSettings cacheSettings = null)
+```
+```C#
+var customCampaign = dbProvider.Get<CustomCampaign>(1);
+customCampaign.Description = "Updated Description";
+var success = dbProvider.Update(customCampaign);
+```
+returns true is successful, false if not.
+
+#### Delete
+Delete a single record in the database and cache if cacheSettings are provided
+
+```C#
+bool Delete<T>(T data, CacheSettings cacheSettings = null, string fieldKey = null)
+```
+```C#
+var customCampaign = dbProvider.Get<CustomCampaign>(1);
+var success = dbProvider.Delete(customCampaign);
+```
+returns true is successful, false if not.
+
+#### Execute
+Execute a SQL statement. Will cache results if cacheSettings are provided.
+
+```C#
+int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidateCache = false)
+```
+```C#
+//TODO
+```
+returns rows affected
+
+#### ExecuteScalar
+Execute a scalar SQL statement. Will cache results if cacheSettings are provided.
+
+```C#
+int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, bool invalidateCache = false)
+```
+```C#
+//TODO
+```
+returns rows affected
+
+#### Get
+Gets a single record from the database by id and maps it to a strongly typed object. Will cache results if cacheSettings are provided.
+
+```C#
+T Get<T>(object id, CacheSettings cacheSettings = null)
+```
+```C#
+var customCampaign = dbProvider.Get<CustomCampaign>(1);
+```
+returns strongly typed object from the data. Null if it was not found.
+
+#### GetByType
+Gets all records in a table.
+
+```C#
+IEnumerable<T> GetByType<T>(CacheSettings cacheSettings = null)
+```
+```C#
+var campaings = dbProvider.GetByType<CustomCampaign>();
+```
+returns an IEnumerable of strongly typed objects.
 
 ## Built With
 
