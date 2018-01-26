@@ -49,17 +49,16 @@ Inserts a single object into the database
 ```C#
 bool Insert<T>(T data, CacheSettings cacheSettings = null)
 ```
-returns true if successful, false if not.
-
 ```C#
 var campaign = new CustomCampaign()
   {
       Description = "Just a test campaign",
       Name = "Github"
   };
-dbProvider.Insert(campaign);
+var success = dbProvider.Insert(campaign);
 
 ```
+returns true if successful, false if not.
 
 #### InsertList
 
@@ -68,8 +67,6 @@ Inserts a list into the database.
 ```C#
 int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new();
 ```
-returns records inserted.
-
 ```C#
 var campaigns = new List<CustomCampaign>()
   {
@@ -79,6 +76,7 @@ var campaigns = new List<CustomCampaign>()
   };
 var rowsAffected = dbProvider.InsertList(campaigns);
 ```
+returns records inserted.
 
 #### InsertAndReturnId
 Insert a single oject into the database and return the new rows ID.
@@ -86,8 +84,6 @@ Insert a single oject into the database and return the new rows ID.
 ```C#
 int InsertAndReturnId<T>(T data, CacheSettings cacheSettings = null)
 ```
-returns ID of the new record.
-
 ```C#
 var campaign = new CustomCampaign()
   {
@@ -97,6 +93,7 @@ var campaign = new CustomCampaign()
 var returnId = dbProvider.InsertAndReturnId(campaign);
 
 ```
+returns ID of the new record.
 
 ## Built With
 
