@@ -65,7 +65,7 @@ returns true if successful, false if not.
 Inserts a list into the database.
 
 ```C#
-int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new();
+int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null);
 ```
 ```C#
 var campaigns = new List<CustomCampaign>()
