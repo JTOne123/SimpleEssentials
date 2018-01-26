@@ -11,6 +11,8 @@ namespace SimpleEssentials.DataProvider
     {
         bool Insert<T>(T data, CacheSettings cacheSettings = null) where T : class, new();
         int InsertList<T>(IEnumerable<T> data, string sql, CacheSettings cacheSettings = null) where T : class, new();
+        int InsertAndReturnId<T>( T data, CacheSettings cacheSettings = null) where T : class, new();
+        [Obsolete("Please use InsertAndReturnId without the sql string instead")]
         int InsertAndReturnId<T>(string sql, T data, CacheSettings cacheSettings = null) where T : class, new();
         void BulkInsert<T>(IEnumerable<T> data, string tableName, CacheSettings cacheSettings = null) where T : class, new();
         bool Update<T>(T data, CacheSettings cacheSettings = null) where T : class, new();

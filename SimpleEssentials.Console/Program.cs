@@ -24,15 +24,23 @@ namespace SimpleEssentials.Console
         static void Main(string[] args)
         {
             //Factory.RegisterDefaults();
-            //Factory.Container.Register<IDataStore>(() => new DbStore(Constants.DbConnectionString()));
-            //Factory.Container.Register<ICacheManager>(() => new MemoryCacheManager());
+            Factory.Container.Register<IDataStore>(() => new DbStore(Constants.DbConnectionString()));
+            Factory.Container.Register<ICacheManager>(() => new MemoryCacheManager());
             //Factory.Container.Register<ILogFileHandler>(() => new LogFileByDateHandler());
             //Factory.Container.Verify();
 
 
             Factory.Log.Info("Just a test log");
 
-            //var dbProvider = new DbDataProvider();
+            var dbProvider = new DbDataProvider();
+            var campaign = new CustomCampaign()
+            {
+                CreateDate = DateTime.Now,
+                Description = "Testing Linq 2 SQL",
+                Name = "Testing 123"
+            };
+            var returnId = dbProvider.InsertAndReturnId("", campaign);
+            System.Console.WriteLine(returnId);
 
             //var dbProvider = new DbDataProvider(new DbStore("[CONTECTION_STRING]"), new MemoryCacheManager());
 
