@@ -48,7 +48,9 @@ namespace SimpleEssentials.Extensions
 
         public static bool IsIdentityMember(Member member)
         {
-            if (member.IsDefined(typeof(KeyAttribute)) || member.IsDefined(typeof(ExplicitKeyAttribute)))
+            if (member.IsDefined(typeof(KeyAttribute)) || 
+                member.IsDefined(typeof(ExplicitKeyAttribute)) || 
+                member.IsDefined(typeof(ComputedAttribute)))
                 return true;
 
             return member.Name.ToLower() == "id";
