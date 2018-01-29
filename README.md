@@ -151,7 +151,7 @@ int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, 
 returns rows affected
 
 ### Get
-Gets a single record from the database by id and maps it to a strongly typed object. Will cache results if cacheSettings are provided.
+Gets a list of records from the database by the expression given
 
 ```C#
 IEnumerable<T> Get<T>(Expression<Func<T, bool>> expression, CacheSettings cacheSettings = null)
