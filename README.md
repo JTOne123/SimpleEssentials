@@ -151,7 +151,7 @@ int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, 
 returns rows affected
 
 ### Get
-Gets a list of records from the database by the expression given
+Gets a list of records from the database by the expression given. Will cache results if cacheSettings are provided.
 
 ```C#
 IEnumerable<T> Get<T>(Expression<Func<T, bool>> expression, CacheSettings cacheSettings = null)
