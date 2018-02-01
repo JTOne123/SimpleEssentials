@@ -27,7 +27,21 @@ namespace SimpleEssentials.Console
             Factory.Container.Register<ICacheManager>(() => new MemoryCacheManager());
             var dbProvider = new DbDataProvider();
 
-            var campaigns = dbProvider.Get<CustomCampaign>(x => x.CreateDate >= DateTime.Now.AddDays(-5) && !x.Test);
+            var allCampaings = dbProvider.CreateTable<CustomCampaign>();
+
+
+            ////var sql = @"SELECT * from dbo.CustomCampaign
+            //            WHERE CreateDate >= @date
+            //            AND Name = @name";
+
+            //var oldWay = dbProvider.GetByParameters<CustomCampaign>(sql, new {date = DateTime.Now.AddDays(-5), name = "Testing 123"});
+
+
+
+            //var campaigns = dbProvider.Get<CustomCampaign>(data => data.CreateDate >= DateTime.Now.AddDays(-5) && data.Name == "Testing 123");
+
+
+            //var returnId = dbProvider.InsertAndReturnId(allCampaings.FirstOrDefault());
 
 
             System.Console.WriteLine("Press Enter to Exit");

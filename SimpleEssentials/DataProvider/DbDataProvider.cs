@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using SimpleEssentials.Cache;
 using SimpleEssentials.DataStore;
+using SimpleEssentials.Utils;
 
 namespace SimpleEssentials.DataProvider
 {
@@ -30,6 +31,12 @@ namespace SimpleEssentials.DataProvider
         {
             _cacheManager?.Insert(data, cacheSettings);
             _dataStore.BulkInsert(data, tableName);
+        }
+
+        public bool CreateTable<T>() where T : class, new()
+        {
+            var createSql = LinqToSQL.Generator.CreateTableSql<T>();
+            return false;
         }
 
         public bool Delete<T>(T data, CacheSettings cacheSettings = null, string fieldKey = null) where T : class, new()

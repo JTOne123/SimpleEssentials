@@ -9,27 +9,6 @@ namespace SimpleEssentials.LinqToSQL
 {
     internal static class LinqToSqlHelpers
     {
-        public static string GenerateInsertColumnNames(object obj, Type overrideType = null)
-        {
-            var nonIdProps = obj.GetNonIdentityProperties(overrideType);
-            var finalString = "(";
-            for (var i = 0; i < nonIdProps.Count; i++)
-            {
-                finalString += nonIdProps[i].Name;
-                if (i != nonIdProps.Count - 1)
-                    finalString += ", ";
-            }
-            finalString += ") values (";
-            for (var i = 0; i < nonIdProps.Count; i++)
-            {
-                finalString += "@" + nonIdProps[i].Name;
-                if (i != nonIdProps.Count - 1)
-                    finalString += ", ";
-            }
-            finalString += ")";
-            return finalString;
-        }
-
         public static WherePart Recurse(ref int i, Expression expression, bool isUnary = false, string prefix = null, string postfix = null)
         {
             //source: http://ryanohs.com/2016/04/generating-sql-from-expression-trees-part-2/
