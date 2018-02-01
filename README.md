@@ -188,9 +188,8 @@ returns an IEnumerable of strongly typed objects.
 * [CsvHelper](https://github.com/JoshClose/CsvHelper) - CSV File Management
 * [Dapper](https://github.com/StackExchange/Dapper) - Lightweight ORM
 * [Dapper.Contrib](https://github.com/StackExchange/Dapper) - ORM Extensions
-* [FastMember](https://github.com/mgravell/fast-member) - Replacement for .NET Reflection
+* [FastMember](https://github.com/mgravell/fast-member) - Faster Reflection
 * [Newtonsoft.Json](https://www.newtonsoft.com/json) - JSON framework
-* [NuPack](https://github.com/Virtuoze/NuPack) - Generate NuGet Packages on build
 * [SimpleInjector](https://simpleinjector.org/index.html) - Dependency Management
 
 ## Authors
