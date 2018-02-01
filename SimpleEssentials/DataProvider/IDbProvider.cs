@@ -10,6 +10,7 @@ namespace SimpleEssentials.DataProvider
 {
     public interface IDbProvider : IDataProvider
     {
+        bool CreateTable<T>() where T : class, new();
         bool Insert<T>(T data, CacheSettings cacheSettings = null) where T : class, new();
         int InsertList<T>(IEnumerable<T> data, CacheSettings cacheSettings = null) where T : class, new();
         [Obsolete("Please use InsertList without the sql string instead")]

@@ -98,7 +98,6 @@
     <Compile Include="Diagnostics\Log.cs" />
     <Compile Include="Diagnostics\LogFileByDateHandler.cs" />
     <Compile Include="Extensions\ConsoleExtensions.cs" />
-    <Compile Include="Extensions\FastMemberExtensions.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="IO\FileHandler.cs" />
     <Compile Include="IO\FolderHandler.cs" />
@@ -121,6 +120,7 @@
     <Compile Include="Utils\ConsoleUtil.cs" />
     <Compile Include="Utils\PredicateBuilder.cs" />
     <Compile Include="Utils\ProgressBar.cs" />
+    <Compile Include="Utils\Reflection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
