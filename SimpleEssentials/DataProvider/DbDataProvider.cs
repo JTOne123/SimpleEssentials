@@ -36,7 +36,8 @@ namespace SimpleEssentials.DataProvider
         public bool CreateTable<T>() where T : class, new()
         {
             var createSql = LinqToSQL.Generator.CreateTableSql<T>();
-            return false;
+            _dataStore.Execute(createSql, null);
+            return true;
         }
 
         public bool Delete<T>(T data, CacheSettings cacheSettings = null, string fieldKey = null) where T : class, new()
