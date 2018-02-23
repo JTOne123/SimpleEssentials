@@ -112,6 +112,7 @@
     <Compile Include="Utils\PredicateBuilder.cs" />
     <Compile Include="Utils\ProgressBar.cs" />
     <Compile Include="Utils\Reflection.cs" />
+    <Compile Include="Utils\SqlBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

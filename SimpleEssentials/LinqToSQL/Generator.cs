@@ -36,7 +36,13 @@ namespace SimpleEssentials.LinqToSQL
             var i = 1;
             return LinqToSqlHelpers.Recurse(ref i, expression.Body, isUnary: true);
         }
-        
+
+        public static WherePart ToSql<T, T2>(Expression<Func<T, T2, bool>> expression)
+        {
+            var i = 1;
+            return LinqToSqlHelpers.Recurse(ref i, expression.Body, isUnary: true);
+        }
+
     }
     
 }
