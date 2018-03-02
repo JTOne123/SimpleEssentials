@@ -24,6 +24,7 @@ namespace SimpleEssentials.DataProvider
         int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidateCache = false);
         int ExecuteScalar(string sql, object param, CacheSettings cacheSettings = null, bool invalidateCache = false);
         T Get<T>(object id, CacheSettings cacheSettings = null) where T : class, new();
+        IEnumerable<T> Get<T>(CacheSettings cacheSettings = null) where T : class, new();
         IEnumerable<T> Get<T>(Expression<Func<T, bool>> expression, CacheSettings cacheSettings = null) where T : class, new();
         //T Get<T>(object id, CacheSettings cacheSettings, string fieldKey) where T : class, new();
         IEnumerable<T> GetByType<T>(CacheSettings cacheSettings = null) where T : class, new();

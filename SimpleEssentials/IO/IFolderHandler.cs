@@ -11,5 +11,6 @@ namespace SimpleEssentials.IO
         IEnumerable<IFileType> GetChildren(IFolder parentFolder);
         IEnumerable<IFile> GetChildFiles(IFolder parentFolder);
         IEnumerable<IFolder> GetChildFolders(IFolder parentFolder);
+        IEnumerable<IFile> GetAllFiles(IFolder searchDir, string[] excludeList = null, List<IFile> fileList = null);
     }
 }

@@ -36,7 +36,8 @@ namespace SimpleEssentials.DataProvider
         public bool CreateTable<T>() where T : class, new()
         {
             var createSql = LinqToSQL.Generator.CreateTableSql<T>();
-            return false;
+            _dataStore.Execute(createSql, null);
+            return true;
         }
 
         public bool Delete<T>(T data, CacheSettings cacheSettings = null, string fieldKey = null) where T : class, new()
@@ -71,12 +72,24 @@ namespace SimpleEssentials.DataProvider
             return results.Value;
         }
 
+        
+
         public T Get<T>(object id, CacheSettings cacheSettings = null) where T : class, new()
         {
             var results = _cacheManager?.GetData<T>(cacheSettings, id.ToString());
             if (results != null) return results;
 
             results = _dataStore.Get<T>(id);
+            _cacheManager?.Insert(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> Get<T>(CacheSettings cacheSettings = null) where T : class, new()
+        {
+            var results = _cacheManager?.GetData<IEnumerable<T>>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetByType<T>();
             _cacheManager?.Insert(results, cacheSettings);
             return results;
         }
