@@ -73,7 +73,7 @@ namespace SimpleEssentials.DataStore
                     }
                 }
             }
-            
+
         }
 
         public bool Delete<T>(T obj) where T : class, new()
@@ -212,6 +212,6 @@ namespace SimpleEssentials.DataStore
             }
         }
 
-        
+
     }
 }

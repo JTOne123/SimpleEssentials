@@ -36,20 +36,21 @@ namespace SimpleEssentials.DataProvider
         public bool CreateTable<T>() where T : class, new()
         {
             var createSql = LinqToSQL.Generator.CreateTableSql<T>();
-            return false;
+            _dataStore.Execute(createSql, null);
+            return true;
         }
 
         public bool Delete<T>(T data, CacheSettings cacheSettings = null, string fieldKey = null) where T : class, new()
         {
             DeleteFromCache(cacheSettings, fieldKey);
-           return _dataStore.Delete(data);
+            return _dataStore.Delete(data);
         }
 
         public int Execute(string sql, object param, CacheSettings cacheSettings = null, bool invalidateCache = false)
         {
             if (invalidateCache)
                 DeleteFromCache(cacheSettings);
-            
+
             var results = _cacheManager?.GetData<int>(cacheSettings);
             if (results != null && results != 0) return results.Value;
 
@@ -62,7 +63,7 @@ namespace SimpleEssentials.DataProvider
         {
             if (invalidateCache)
                 DeleteFromCache(cacheSettings);
-            
+
             var results = _cacheManager?.GetData<int>(cacheSettings);
             if (results != null && results != 0) return results.Value;
 
@@ -71,12 +72,24 @@ namespace SimpleEssentials.DataProvider
             return results.Value;
         }
 
+
+
         public T Get<T>(object id, CacheSettings cacheSettings = null) where T : class, new()
         {
             var results = _cacheManager?.GetData<T>(cacheSettings, id.ToString());
             if (results != null) return results;
 
             results = _dataStore.Get<T>(id);
+            _cacheManager?.Insert(results, cacheSettings);
+            return results;
+        }
+
+        public IEnumerable<T> Get<T>(CacheSettings cacheSettings = null) where T : class, new()
+        {
+            var results = _cacheManager?.GetData<IEnumerable<T>>(cacheSettings);
+            if (results != null) return results;
+
+            results = _dataStore.GetByType<T>();
             _cacheManager?.Insert(results, cacheSettings);
             return results;
         }
@@ -212,7 +225,7 @@ namespace SimpleEssentials.DataProvider
                     _cacheManager?.Delete(cacheSettings);
                     break;
                 case CacheStorage.Hashed:
-                    if(!string.IsNullOrEmpty(fieldKey))
+                    if (!string.IsNullOrEmpty(fieldKey))
                         _cacheManager?.DeleteSingleHash(cacheSettings, fieldKey);
                     else
                         _cacheManager?.DeleteHash(cacheSettings);
