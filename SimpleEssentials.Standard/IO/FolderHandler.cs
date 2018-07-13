@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using SimpleEssentials.IO.Types;
 using File = SimpleEssentials.IO.Types.File;
@@ -21,7 +20,7 @@ namespace SimpleEssentials.IO
             if (!relative)
                 return (IFolder)Create(path);
 
-            var filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+            var filePath = new Uri(AppContext.BaseDirectory).LocalPath;
             var finalpath = Path.GetDirectoryName(filePath) + System.IO.Path.DirectorySeparatorChar + path;
             System.IO.Directory.CreateDirectory(finalpath);
             var finalResult = System.IO.Path.GetDirectoryName(finalpath);
@@ -88,29 +87,6 @@ namespace SimpleEssentials.IO
             }
 
             return files;
-        }
-
-        public IEnumerable<IFile> GetAllFiles(IFolder searchDir, string[] excludeList = null, List<IFile> fileList = null)
-        {
-            if (fileList == null)
-                fileList = new List<IFile>();
-
-            var files = Factory.FolderHandler.GetChildFiles(searchDir);
-            fileList.AddRange(files);
-
-            var folders = Factory.FolderHandler.GetChildFolders(searchDir);
-
-            foreach (var folder in folders)
-            {
-                GetAllFiles(folder, excludeList, fileList);
-            }
-
-            if (excludeList != null)
-                fileList = fileList.Where(x => !excludeList.ToList().Exists(y => x.FullPath.Contains(y))).ToList();
-
-
-
-            return fileList;
         }
 
         public IFileType Get(string path)
