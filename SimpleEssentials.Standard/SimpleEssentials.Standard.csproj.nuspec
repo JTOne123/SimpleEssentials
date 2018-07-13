@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SimpleEssentials.Standard</id>
+    <version>1.1.0</version>
+    <authors>ksuarez</authors>
+    <owners>ksuarez</owners>
+    <projectUrl>https://github.com/ksuarez2/SimpleEssentials</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SimpleEssentials.Standard</description>
+    <copyright>Copyright 2018</copyright>
+    <tags>Productivity Essentials</tags>
+  </metadata>
+</package>

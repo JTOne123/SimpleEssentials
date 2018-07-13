@@ -12,20 +12,20 @@ namespace SimpleEssentials.IO.Writers
         
         public void Write<T>(string filePath, T obj, bool append)
         {
-            //using (var streamWriter = new StreamWriter(filePath, append))
-            //{
-            //    var csvWriter = new CsvHelper.CsvWriter(streamWriter);
-            //    csvWriter.WriteRecord(obj);
-            //}
+            using (var streamWriter = new StreamWriter(filePath, append))
+            {
+                var csvWriter = new CsvHelper.CsvWriter(streamWriter);
+                csvWriter.WriteRecord(obj);
+            }
         }
 
         public void Write<T>(string filePath, IEnumerable<T> obj, bool append)
         {
-            //using (var streamWriter = new StreamWriter(filePath, append))
-            //{
-            //    var csvWriter = new CsvHelper.CsvWriter(streamWriter);
-            //    csvWriter.WriteRecords(obj);
-            //}
+            using (var streamWriter = new StreamWriter(filePath, append))
+            {
+                var csvWriter = new CsvHelper.CsvWriter(streamWriter);
+                csvWriter.WriteRecords(obj);
+            }
         }
     }
 }

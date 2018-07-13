@@ -17,12 +17,12 @@ namespace SimpleEssentials.IO.Readers
         public IEnumerable<T> ReadAll<T>(string filePath)
         {
             IEnumerable<T> records = null;
-            //using (System.IO.TextReader fileReader = System.IO.File.OpenText(filePath))
-            //{
-            //    var csv = new CsvHelper.CsvReader(fileReader);
-            //    records = csv.GetRecords<T>().ToList();
-            //}
-        
+            using (System.IO.TextReader fileReader = System.IO.File.OpenText(filePath))
+            {
+                var csv = new CsvHelper.CsvReader(fileReader);
+                records = csv.GetRecords<T>().ToList();
+            }
+
             return records;
         }
     }

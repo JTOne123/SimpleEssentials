@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -26,7 +27,7 @@ namespace SimpleEssentials.Standard.Extensions
 
         public static IEnumerable<Attribute> GetCustomAttributes(this Type type, bool inherit)
         {
-            return type.GetTypeInfo().GetCustomAttributes(inherit);
+            return type.GetTypeInfo().GetCustomAttributes();
         }
 
         public static TypeCode GetTypeCode(Type type)
