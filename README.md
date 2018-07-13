@@ -183,6 +183,41 @@ var campaings = dbProvider.GetByType<CustomCampaign>();
 ```
 returns an IEnumerable of strongly typed objects.
 
+## File Handling
+### Methods
+* Create
+* Get
+* Write
+* Read
+* ReadAll
+
+
+### Create
+File
+```C#
+var file = Factory.FileHandler.Create("test.txt");
+```
+Folder
+```C#
+var folder = Factory.FolderHandler.Create("test");
+```
+
+### Get
+File
+```C#
+var file = Factory.FileHandler.Get("test.txt");
+```
+Folder
+```C#
+var folder = Factory.FolderHandler.Get("test");
+```
+
+### Write
+[To be added]
+
+### Read
+[To be added]
+
 ## Built With
 
 * [CsvHelper](https://github.com/JoshClose/CsvHelper) - CSV File Management
