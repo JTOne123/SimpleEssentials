@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <Authors>Kevin Suarez</Authors>
+    <Company>Kevin Digital LLC</Company>
+    <Description>ORM Wrapper around Dapper.</Description>
+    <Version>1.0.0.1</Version>
+    <PackageReleaseNotes>Add .NET 4.5.2 support</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Dapper.Contrib" Version="1.50.5" />
+    <PackageReference Include="SimpleEssentials.LinqToDb" Version="1.0.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+  </ItemGroup>
+
+</Project>
