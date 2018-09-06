@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using SimpleEssentials.LinqToDb;
+using SimpleEssentials.LinqToDb.Reflector;
 
 namespace SimpleEssentials.ORM
 {
