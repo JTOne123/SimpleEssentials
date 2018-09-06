@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using SimpleEssentials.LinqToDb.Expression;
 using SimpleEssentials.LinqToDb.Reflector;
 
@@ -17,7 +15,7 @@ namespace SimpleEssentials.LinqToDb
 
             if (expression != null)
             {
-                where = ExpressionToSql.Run(expression);
+                where = ExpressionToSql.Convert(expression);
                 command.Concat($" where {where.Sql}");
             }
 
@@ -33,29 +31,29 @@ namespace SimpleEssentials.LinqToDb
         {
             var command = new CustomCommand();
             var type = typeof(T);
-            command.Concat($"select * from {SqlReflector.GetTableName(type, type)} {SqlReflector.GetTableName(type, type)}");
+            command.Concat($"select * from [{SqlReflector.GetTableName(type, type)}] [{SqlReflector.GetTableName(type, type)}]");
             return command;
         }
 
-        public static CustomCommand Join<T, T2>(this CustomCommand command, Expression<Func<T, T2, bool>> expression)
+        public static CustomCommand InnerJoinOn<T, T2>(this CustomCommand command, Expression<Func<T, T2, bool>> expression)
         {
             var type = typeof(T2);
-            command.Concat($"inner join {SqlReflector.GetTableName(type, type)} {SqlReflector.GetTableName(type, type)}");
-            command.Concat($"on {ExpressionToSql.Run(expression).Sql}");
+            command.Concat($"inner join [{SqlReflector.GetTableName(type, type)}] [{SqlReflector.GetTableName(type, type)}]");
+            command.Concat($"on {ExpressionToSql.Convert(expression).Sql}");
             return command;
         }
 
-        public static CustomCommand JoinLeft<T, T2>(this CustomCommand command, Expression<Func<T, T2, bool>> expression)
+        public static CustomCommand LeftJoinOn<T, T2>(this CustomCommand command, Expression<Func<T, T2, bool>> expression)
         {
             var type = typeof(T2);
-            command.Concat($"left join {SqlReflector.GetTableName(type, type)} {SqlReflector.GetTableName(type, type)}");
-            command.Concat($"on {ExpressionToSql.Run(expression).Sql}");
+            command.Concat($"left join [{SqlReflector.GetTableName(type, type)}] [{SqlReflector.GetTableName(type, type)}]");
+            command.Concat($"on {ExpressionToSql.Convert(expression).Sql}");
             return command;
         }
 
         public static CustomCommand On<T, T2>(this CustomCommand command, Expression<Func<T, T2, bool>> expression)
         {
-            command.Concat($"on {ExpressionToSql.Run(expression).Sql}");
+            command.Concat($"on {ExpressionToSql.Convert(expression).Sql}");
             return command;
         }
 

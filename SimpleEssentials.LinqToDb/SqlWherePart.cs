@@ -10,7 +10,7 @@ namespace SimpleEssentials.LinqToDb
         public string Sql { get; set; }
         public Dictionary<string, object> Parameters { get; set; } = new Dictionary<string, object>();
 
-        public static IWherePart IsSql(string sql)
+        public IWherePart IsSql(string sql)
         {
             return new SqlWherePart()
             {
@@ -19,16 +19,19 @@ namespace SimpleEssentials.LinqToDb
             };
         }
 
-        public static IWherePart IsParameter(int count, object value)
+        public void IsParameter(object value)
         {
-            return new SqlWherePart()
+            var count = Parameters.Count;
+            this.Parameters.Add(count.ToString(), value);
+            this.Sql += $"@{count}";
+            /*return new SqlWherePart()
             {
                 Parameters = { { count.ToString(), value } },
                 Sql = $"@{count}"
-            };
+            };*/
         }
 
-        public static IWherePart IsCollection(ref int countStart, IEnumerable values)
+        public IWherePart IsCollection(ref int countStart, IEnumerable values)
         {
             var parameters = new Dictionary<string, object>();
             var sql = new StringBuilder("(");
@@ -50,16 +53,26 @@ namespace SimpleEssentials.LinqToDb
             };
         }
 
-        public static IWherePart Concat(string @operator, IWherePart operand)
+        public void Concat(string message)
+        {
+            this.Sql += $"{message}";
+            /*return new SqlWherePart()
+            {
+                Parameters = wherePart.Parameters,
+                Sql = $"{wherePart.Sql} {message}"
+            };*/
+        }
+
+        /*public IWherePart Concat(string @operator, IWherePart operand)
         {
             return new SqlWherePart()
             {
                 Parameters = operand.Parameters,
                 Sql = $"({@operator} {operand.Sql})"
             };
-        }
+        }*/
 
-        public static IWherePart Concat(IWherePart left, string @operator, IWherePart right)
+        public IWherePart Concat(IWherePart left, string @operator, IWherePart right)
         {
             return new SqlWherePart()
             {
