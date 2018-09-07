@@ -1,4 +1,4 @@
-﻿namespace SimpleEssentials.LinqToDb
+﻿namespace SimpleEssentials.ToQuery
 {
     public interface ICustomCommand
     {

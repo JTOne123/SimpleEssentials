@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using SimpleEssentials.LinqToDb.Expression.Interpretor;
+using SimpleEssentials.ToQuery.Expression.Interpretor;
 
-namespace SimpleEssentials.LinqToDb.Expression.Visitors
+namespace SimpleEssentials.ToQuery.Expression.Visitors
 {
    public class MemberVisitor : Visitor
     {
@@ -39,7 +37,9 @@ namespace SimpleEssentials.LinqToDb.Expression.Visitors
                 //Console.WriteLine($"{prefix}The name of the FieldInfo is {fieldName}");
                 //Console.WriteLine($"{prefix}The return type is {node.Type}");
                 //Interpretor.WherePart.Sql += $"[{fieldName}]";
-                this.Interpretor.WherePart.Concat($"[{prefix}{fieldName}{postfix}]");
+                //this.Interpretor.WherePart.Concat($"[{prefix}{fieldName}{postfix}]");
+                var value = GetValue(node);
+                this.Interpretor.WherePart.IsParameter(value);
 
             }
             //throw new Exception($"Expression does not refer to a property or field: {node}");

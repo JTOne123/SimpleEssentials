@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SimpleEssentials.LinqToDb
+﻿namespace SimpleEssentials.ToQuery
 {
     public class CustomCommand : ICustomCommand
     {

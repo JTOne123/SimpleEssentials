@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEssentials.Console", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEssentials.Standard", "SimpleEssentials.Standard\SimpleEssentials.Standard.csproj", "{62ECE93B-F7C3-4212-8F87-06633F0F4DD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEssentials.Cache", "SimpleEssentials.Cache\SimpleEssentials.Cache.csproj", "{AC85A8F9-C08B-4FB3-BD5A-2EEB36835B4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEssentials.Cache", "SimpleEssentials.Cache\SimpleEssentials.Cache.csproj", "{AC85A8F9-C08B-4FB3-BD5A-2EEB36835B4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEssentials.ORM", "SimpleEssentials.ORM\SimpleEssentials.ORM.csproj", "{EDF27D94-5917-4D7A-A1A8-49FE46F648E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEssentials.ORM", "SimpleEssentials.ORM\SimpleEssentials.ORM.csproj", "{EDF27D94-5917-4D7A-A1A8-49FE46F648E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEssentials.LinqToDb", "SimpleEssentials.LinqToDb\SimpleEssentials.LinqToDb.csproj", "{F52FC762-08FE-4D93-8C43-4FD822976D21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEssentials.ToQuery", "SimpleEssentials.ToQuery\SimpleEssentials.ToQuery.csproj", "{DA3E0B98-FAAA-4635-B6AE-963A9B04DE63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{EDF27D94-5917-4D7A-A1A8-49FE46F648E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDF27D94-5917-4D7A-A1A8-49FE46F648E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDF27D94-5917-4D7A-A1A8-49FE46F648E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F52FC762-08FE-4D93-8C43-4FD822976D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F52FC762-08FE-4D93-8C43-4FD822976D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F52FC762-08FE-4D93-8C43-4FD822976D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F52FC762-08FE-4D93-8C43-4FD822976D21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA3E0B98-FAAA-4635-B6AE-963A9B04DE63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA3E0B98-FAAA-4635-B6AE-963A9B04DE63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA3E0B98-FAAA-4635-B6AE-963A9B04DE63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA3E0B98-FAAA-4635-B6AE-963A9B04DE63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
