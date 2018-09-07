@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Dapper.Contrib.Extensions;
 using FastMember;
 
-namespace SimpleEssentials.LinqToDb.Reflector
+namespace SimpleEssentials.ToQuery.Reflector
 {
     public class SqlReflector : IReflector
     {

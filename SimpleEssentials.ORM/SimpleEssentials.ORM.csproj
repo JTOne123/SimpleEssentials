@@ -5,10 +5,10 @@
     <Authors>Kevin Suarez</Authors>
     <Company>Kevin Digital LLC</Company>
     <Description>Simple ORM Wrapper around Dapper.</Description>
-    <Version>1.0.0.2</Version>
+    <Version>1.0.0.3</Version>
     <PackageReleaseNotes>Add .NET 4.5.2 support</PackageReleaseNotes>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
+    <FileVersion>1.0.0.3</FileVersion>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.ORM</PackageProjectUrl>
   </PropertyGroup>
 

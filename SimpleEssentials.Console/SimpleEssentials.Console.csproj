@@ -103,9 +103,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleEssentials.LinqToDb\SimpleEssentials.LinqToDb.csproj">
-      <Project>{f52fc762-08fe-4d93-8c43-4fd822976d21}</Project>
-      <Name>SimpleEssentials.LinqToDb</Name>
+    <ProjectReference Include="..\SimpleEssentials.ToQuery\SimpleEssentials.ToQuery.csproj">
+      <Project>{da3e0b98-faaa-4635-b6ae-963a9b04de63}</Project>
+      <Name>SimpleEssentials.ToQuery</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

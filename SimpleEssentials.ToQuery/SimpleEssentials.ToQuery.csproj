@@ -5,11 +5,11 @@
     <Authors>Kevin Suarez</Authors>
     <Company>Kevin Digital LLC</Company>
     <Description>Simple Linq To DB Library. Currently supports LINQ to SQL. Look forward to more database engine support in the near future.</Description>
-    <Version>1.0.0.2</Version>
+    <Version>1.0.0.3</Version>
     <PackageReleaseNotes>Added Support for .NET 4.5.2</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.LinqToDb</PackageProjectUrl>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
+    <FileVersion>1.0.0.3</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">

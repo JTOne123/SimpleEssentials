@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FastMember;
 
-namespace SimpleEssentials.LinqToDb.Reflector
+namespace SimpleEssentials.ToQuery.Reflector
 {
     public interface IReflector
     {

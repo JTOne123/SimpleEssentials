@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Linq.Expressions;
-using SimpleEssentials.LinqToDb.Expression;
-using SimpleEssentials.LinqToDb.Reflector;
+using SimpleEssentials.ToQuery.Expression;
+using SimpleEssentials.ToQuery.Reflector;
 
-namespace SimpleEssentials.LinqToDb
+namespace SimpleEssentials.ToQuery
 {
-    public static class LinqToSql
+    public static class ExpToSql
     {
         private static readonly SqlReflector SqlReflector = new SqlReflector();
 
-        public static IWherePart Where<T>(this CustomCommand command, Expression<Func<T, bool>> expression = null)
+        public static IQueryObject Where<T>(this CustomCommand command, Expression<Func<T, bool>> expression = null)
         {
-            IWherePart where = null;
+            IQueryObject where = null;
 
             if (expression != null)
             {
                 where = ExpressionToSql.Convert(expression);
-                command.Concat($" where {where.Sql}");
+                command.Concat($" where {where.Query}");
             }
 
             if (where == null)
                 return null;
 
-            where.Sql = command.GetCommand();
+            where.Query = command.GetCommand();
             where.Parameters = where.Parameters;
             return where;
         }
@@ -39,7 +39,7 @@ namespace SimpleEssentials.LinqToDb
         {
             var type = typeof(T2);
             command.Concat($"inner join [{SqlReflector.GetTableName(type, type)}] [{SqlReflector.GetTableName(type, type)}]");
-            command.Concat($"on {ExpressionToSql.Convert(expression).Sql}");
+            command.Concat($"on {ExpressionToSql.Convert(expression).Query}");
             return command;
         }
 
@@ -47,26 +47,26 @@ namespace SimpleEssentials.LinqToDb
         {
             var type = typeof(T2);
             command.Concat($"left join [{SqlReflector.GetTableName(type, type)}] [{SqlReflector.GetTableName(type, type)}]");
-            command.Concat($"on {ExpressionToSql.Convert(expression).Sql}");
+            command.Concat($"on {ExpressionToSql.Convert(expression).Query}");
             return command;
         }
 
         public static CustomCommand On<T, T2>(this CustomCommand command, Expression<Func<T, T2, bool>> expression)
         {
-            command.Concat($"on {ExpressionToSql.Convert(expression).Sql}");
+            command.Concat($"on {ExpressionToSql.Convert(expression).Query}");
             return command;
         }
 
-        public static IWherePart Generate(this IWherePart wherePart)
+        public static IQueryObject Generate(this IQueryObject wherePart)
         {
             return wherePart;
         }
 
-        public static IWherePart Generate(this ICustomCommand command)
+        public static IQueryObject Generate(this ICustomCommand command)
         {
-            var where = new SqlWherePart
+            var where = new SqlQueryObject
             {
-                Sql = command.GetCommand()
+                Query = command.GetCommand()
             };
             return where;
         }

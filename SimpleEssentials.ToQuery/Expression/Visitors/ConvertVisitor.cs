@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using SimpleEssentials.LinqToDb.Expression.Interpretor;
+using SimpleEssentials.ToQuery.Expression.Interpretor;
 
-namespace SimpleEssentials.LinqToDb.Expression.Visitors
+namespace SimpleEssentials.ToQuery.Expression.Visitors
 {
     public class ConvertVisitor : Visitor
     {

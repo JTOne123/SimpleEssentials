@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using SimpleEssentials.LinqToDb.Expression.Interpretor;
+﻿using System.Linq.Expressions;
+using SimpleEssentials.ToQuery.Expression.Interpretor;
 
-namespace SimpleEssentials.LinqToDb.Expression.Visitors
+namespace SimpleEssentials.ToQuery.Expression.Visitors
 {
     public class MethodCallVisitor : Visitor
     {

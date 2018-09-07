@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
-namespace SimpleEssentials.LinqToDb.Expression.Interpretor
+namespace SimpleEssentials.ToQuery.Expression.Interpretor
 {
     public class SqlInterpreter : IInterpreter
     {
-        public IWherePart WherePart { get; set; }
+        public IQueryObject WherePart { get; set; }
         public string WildcardCharacter { get; set; }
 
         public SqlInterpreter()
         {
-            WherePart = new SqlWherePart();
+            WherePart = new SqlQueryObject();
             WildcardCharacter = "%";
 
         }
