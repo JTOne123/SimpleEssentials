@@ -1,4 +1,4 @@
-﻿ # LinqToQuery
+﻿ # ToQuery
  A small, lightweight library to convert function expressions into parameterized database query string(s). 
  
  ## Supported Databases
