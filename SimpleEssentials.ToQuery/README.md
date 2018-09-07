@@ -8,6 +8,16 @@
  ## Usage
  To use the library, use the appropriate expression converter for your database.
  
+ ### Expresison Converters
+ * ExpToSql
+ 
+ #### Expression Converter Methods
+ * Select
+ * Where
+ * InnerJoinOn
+ * LeftJoinOn
+ * On
+ 
  ### Simple Use
  ```C#
  var queryObject = ExpToSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == 2);
@@ -29,14 +39,6 @@ var sqlParameters = queryObject.Parameters;
  ```
  sqlQuery will now be a parameterized query string and sqlParameters is a dictionary with the key being the parameter name and the value as the variable originally passed in
  
- ### Expresison Converters
- * ExpToSql
  
- #### Expression Converter Methods
- * Select
- * Where
- * InnerJoinOn
- * LeftJoinOn
- * On
  
  
