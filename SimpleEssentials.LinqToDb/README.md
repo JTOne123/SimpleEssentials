@@ -1,1 +1,43 @@
-﻿
+﻿# LinqToQuery
+ A small, lightweight library to convert function expressions into parameterized database query string(s). 
+ 
+ ## Supported Databases
+ * MSSQL
+ * More To Come
+ 
+ ## Usage
+ To use the library, use the appropriate expression converter for your database.
+ 
+ ### Simple Use
+ ```C#
+ var queryObject = ExpToSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == 2);
+ var sqlQuery = queryObject.Query;
+
+ //output of sqlQuery:  select * from [CustomCampaign] [CustomCampaign]  where [CustomCampaign].[Id] = 2
+ ```
+ 
+ ### Parameterized Use
+ When passing in variabled into the expression your query will be automatically parameterized.
+ ```C#
+var testVariable = 50;
+var queryObject = ExpToSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == testVariable);
+var sqlQuery = queryObject.Query;
+var sqlParameters = queryObject.Parameters;
+
+ //output of sqlQuery:   select * from [CustomCampaign] [CustomCampaign]  where [CustomCampaign].[Id] = @1
+ //output of sqlParameters: [1, 50]
+ ```
+ sqlQuery will now be a parameterized query string and sqlParameters is dictionary with the key being the parameter name and the value as the variable originally passed in
+ 
+ ### Expresison Converters
+ * ExpToSql
+ 
+ #### Expression Converter Methods
+ * Select
+ * Where
+ * InnerJoinOn
+ * LeftJoinOn
+ * On
+ 
+ 
+ 
