@@ -27,7 +27,7 @@ var sqlParameters = queryObject.Parameters;
  //output of sqlQuery:   select * from [CustomCampaign] [CustomCampaign]  where [CustomCampaign].[Id] = @1
  //output of sqlParameters: [1, 50]
  ```
- sqlQuery will now be a parameterized query string and sqlParameters is dictionary with the key being the parameter name and the value as the variable originally passed in
+ sqlQuery will now be a parameterized query string and sqlParameters is a dictionary with the key being the parameter name and the value as the variable originally passed in
  
  ### Expresison Converters
  * ExpToSql
