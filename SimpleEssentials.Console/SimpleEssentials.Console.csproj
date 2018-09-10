@@ -103,6 +103,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimpleEssentials.IO\SimpleEssentials.IO.csproj">
+      <Project>{23b139f5-8969-4a79-935c-1df1217a190b}</Project>
+      <Name>SimpleEssentials.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleEssentials.Logger\SimpleEssentials.Log.csproj">
+      <Project>{fdcde453-fe0d-4eb9-9366-01b98c4ac334}</Project>
+      <Name>SimpleEssentials.Log</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleEssentials.ToQuery\SimpleEssentials.ToQuery.csproj">
       <Project>{da3e0b98-faaa-4635-b6ae-963a9b04de63}</Project>
       <Name>SimpleEssentials.ToQuery</Name>

@@ -39,6 +39,11 @@ namespace SimpleEssentials.ToQuery
             return this;
         }
 
+        public IExpToQuery SelectTop<T>(int rowCount)
+        {
+            throw new NotSupportedException("Use \"Limit\" for MySql instead.");
+        }
+
         public IExpToQuery InnerJoinOn<T, T2>(Expression<Func<T, T2, bool>> expression)
         {
             var type = typeof(T2);
@@ -71,7 +76,7 @@ namespace SimpleEssentials.ToQuery
 
         public IQueryObject Generate()
         {
-            return this._wherePart;
+            return _wherePart;
         }
 
 

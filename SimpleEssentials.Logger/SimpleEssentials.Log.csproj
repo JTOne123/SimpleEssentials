@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <RootNamespace>SimpleEssentials.Log</RootNamespace>
+    <AssemblyName>SimpleEssentials.Log</AssemblyName>
+    <Version>1.0.0.5</Version>
+    <Authors>Kevin Suarez</Authors>
+    <Company>Kevin Digital LLC</Company>
+    <Description>Simple Logging Library</Description>
+    <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.Log</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SimpleEssentials.IO" Version="1.0.0.4" />
+  </ItemGroup>
+
+</Project>

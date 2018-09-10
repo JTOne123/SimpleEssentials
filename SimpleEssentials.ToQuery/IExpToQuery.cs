@@ -9,6 +9,7 @@ namespace SimpleEssentials.ToQuery
     {
         IExpToQuery Where<T>(Expression<Func<T, bool>> expression = null);
         IExpToQuery Select<T>();
+        IExpToQuery SelectTop<T>(int rowCount);
         IExpToQuery InnerJoinOn<T, T2>(Expression<Func<T, T2, bool>> expression);
         IExpToQuery LeftJoinOn<T, T2>(Expression<Func<T, T2, bool>> expression);
         IExpToQuery On<T, T2>(Expression<Func<T, T2, bool>> expression);
