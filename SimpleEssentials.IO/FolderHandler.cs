@@ -19,8 +19,11 @@ namespace SimpleEssentials.IO
         {
             if (!relative)
                 return (IFolder)Create(path);
-
+#if NETSTANDARD2_0
             var filePath = new Uri(AppContext.BaseDirectory).LocalPath;
+#else
+            var filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+#endif
             var finalpath = Path.GetDirectoryName(filePath) + System.IO.Path.DirectorySeparatorChar + path;
             System.IO.Directory.CreateDirectory(finalpath);
             var finalResult = System.IO.Path.GetDirectoryName(finalpath);
