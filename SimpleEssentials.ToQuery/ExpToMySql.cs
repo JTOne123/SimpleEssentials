@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 using SimpleEssentials.ToQuery.Expression;
 using SimpleEssentials.ToQuery.Expression.Interpretor;
 using SimpleEssentials.ToQuery.Reflector;
 
 namespace SimpleEssentials.ToQuery
 {
-    public class ExpToMsSql : IExpToQuery
+    public class ExpToMySql : IExpToQuery
     {
-        private readonly IReflector _reflector = new MsSqlReflector();
-        private readonly IInterpreter _interpreter = new MsSqlInterpreter();
+        private readonly IReflector _reflector = new MySqlReflector();
+        private readonly IInterpreter _interpreter = new MySqlInterpreter();
         private readonly ICustomCommand _command = new CustomCommand();
         private IQueryObject _wherePart = new QueryObject();
 
@@ -55,7 +57,7 @@ namespace SimpleEssentials.ToQuery
             return this;
         }
 
-        public IExpToQuery On<T, T2>( Expression<Func<T, T2, bool>> expression)
+        public IExpToQuery On<T, T2>(Expression<Func<T, T2, bool>> expression)
         {
             _command.Concat($"on {ExpressionToQuery.Convert(expression, _interpreter).Query}");
             return this;
@@ -72,6 +74,6 @@ namespace SimpleEssentials.ToQuery
             return this._wherePart;
         }
 
-        
+
     }
 }
