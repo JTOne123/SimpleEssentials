@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SimpleEssentials.Console.Models;
+using SimpleEssentials.Log;
+using SimpleEssentials.Log.Writters;
 using SimpleEssentials.ToQuery;
 
 namespace SimpleEssentials.Console
@@ -21,6 +23,11 @@ namespace SimpleEssentials.Console
             var queryObject = new ExpToMySql().Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == testVariable).Generate();
             var sqlQuery = queryObject.Query;
             var sqlParameters = queryObject.Parameters;
+
+            var logger = new Logger(new FileWritter());
+
+            logger.Debug(sqlQuery);
+            logger.Debug(sqlQuery);
 
            // var sql = ExpToMsSql.Select<CustomCampaign>().InnerJoinOn<CustomCampaign, TestItem>((x, y) => x.Id == y.Id).Where<CustomCampaign>(x => x.Id == 5 || x.Id == 0);
             //Expression<Func<CustomCampaign, bool>> exp = (x) => x.CreateDate == DateTime.Now;

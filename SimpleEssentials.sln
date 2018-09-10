@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEssentials.ToQuery", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEssentials.IO", "SimpleEssentials.IO\SimpleEssentials.IO.csproj", "{23B139F5-8969-4A79-935C-1DF1217A190B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEssentials.Log", "SimpleEssentials.Logger\SimpleEssentials.Log.csproj", "{FDCDE453-FE0D-4EB9-9366-01B98C4AC334}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{23B139F5-8969-4A79-935C-1DF1217A190B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23B139F5-8969-4A79-935C-1DF1217A190B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23B139F5-8969-4A79-935C-1DF1217A190B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDCDE453-FE0D-4EB9-9366-01B98C4AC334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDCDE453-FE0D-4EB9-9366-01B98C4AC334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDCDE453-FE0D-4EB9-9366-01B98C4AC334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDCDE453-FE0D-4EB9-9366-01B98C4AC334}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

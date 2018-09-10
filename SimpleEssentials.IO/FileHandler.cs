@@ -80,11 +80,21 @@ namespace SimpleEssentials.IO
 
         public bool Write(IFile file, string content, bool append)
         {
-            using (var strem = System.IO.File.CreateText(file.FullPath))
-            //new System.IO.StreamWriter(file.FullPath, append))
+            if (append)
             {
-                strem.WriteLine(content);
+                using (var strem = System.IO.File.AppendText(file.FullPath))
+                {
+                    strem.WriteLine(content);
+                }
             }
+            else
+            {
+                using (var strem = System.IO.File.CreateText(file.FullPath))
+                {
+                    strem.WriteLine(content);
+                }
+            }
+            
             return true;
         }
 
