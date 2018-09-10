@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <Version>1.0.0.4</Version>
+    <Authors>Kevin Suarez</Authors>
+    <Company>Kevin Digital LLC</Company>
+    <Description>Simple File Manager</Description>
+    <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.IO</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="7.1.1" />
+  </ItemGroup>
+
+</Project>

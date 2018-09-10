@@ -14,7 +14,6 @@ namespace SimpleEssentials.ToQuery.Expression.Interpretor
         {
             WherePart = new QueryObject();
             WildcardCharacter = "%";
-
         }
 
         public string NodeTypeToString(ExpressionType nodeType)
