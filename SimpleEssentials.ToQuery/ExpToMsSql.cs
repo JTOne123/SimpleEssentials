@@ -5,7 +5,7 @@ using SimpleEssentials.ToQuery.Reflector;
 
 namespace SimpleEssentials.ToQuery
 {
-    public static class ExpToSql
+    public static class ExpToMsSql
     {
         private static readonly SqlReflector SqlReflector = new SqlReflector();
 
@@ -15,7 +15,7 @@ namespace SimpleEssentials.ToQuery
 
             if (expression != null)
             {
-                where = ExpressionToSql.Convert(expression);
+                where = ExpressionToMsSql.Convert(expression);
                 command.Concat($" where {where.Query}");
             }
 
@@ -39,7 +39,7 @@ namespace SimpleEssentials.ToQuery
         {
             var type = typeof(T2);
             command.Concat($"inner join [{SqlReflector.GetTableName(type, type)}] [{SqlReflector.GetTableName(type, type)}]");
-            command.Concat($"on {ExpressionToSql.Convert(expression).Query}");
+            command.Concat($"on {ExpressionToMsSql.Convert(expression).Query}");
             return command;
         }
 
@@ -47,13 +47,13 @@ namespace SimpleEssentials.ToQuery
         {
             var type = typeof(T2);
             command.Concat($"left join [{SqlReflector.GetTableName(type, type)}] [{SqlReflector.GetTableName(type, type)}]");
-            command.Concat($"on {ExpressionToSql.Convert(expression).Query}");
+            command.Concat($"on {ExpressionToMsSql.Convert(expression).Query}");
             return command;
         }
 
         public static CustomCommand On<T, T2>(this CustomCommand command, Expression<Func<T, T2, bool>> expression)
         {
-            command.Concat($"on {ExpressionToSql.Convert(expression).Query}");
+            command.Concat($"on {ExpressionToMsSql.Convert(expression).Query}");
             return command;
         }
 

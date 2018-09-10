@@ -18,11 +18,11 @@ namespace SimpleEssentials.Console
         {
             //test(2);
             var testVariable = 2;
-            var queryObject = ExpToSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == testVariable);
+            var queryObject = ExpToMsSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == testVariable);
             var sqlQuery = queryObject.Query;
             var sqlParameters = queryObject.Parameters;
 
-            //var sql = ExpToSql.Select<CustomCampaign>().InnerJoinOn<CustomCampaign, TestItem>((x, y) => x.Id == y.Id).Where<CustomCampaign>(x => x.Id == 5 || x.Id == 0);*/
+            var sql = ExpToMsSql.Select<CustomCampaign>().InnerJoinOn<CustomCampaign, TestItem>((x, y) => x.Id == y.Id).Where<CustomCampaign>(x => x.Id == 5 || x.Id == 0);
             //Expression<Func<CustomCampaign, bool>> exp = (x) => x.CreateDate == DateTime.Now;
            // Visitor.CreateFromExpression(exp).Visit<int>("", Test);
 
@@ -32,7 +32,7 @@ namespace SimpleEssentials.Console
 
         static void test(int id)
         {
-            var queryObject = ExpToSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == id);
+            var queryObject = ExpToMsSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == id);
             var sqlQuery = queryObject.Query;
             var sqlParameters = queryObject.Parameters;
         }
