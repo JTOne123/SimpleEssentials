@@ -24,10 +24,11 @@ namespace SimpleEssentials.ToQuery.Expression.Visitors
                 //Console.WriteLine($"{prefix}The return type is {node.Type}");
 
                 //Interpretor.WherePart.Sql += $"[{propName}]";
-                if(node.Member.DeclaringType != null)
-                    this.Interpretor.WherePart.Concat($"[{node.Member.DeclaringType.Name}].[{prefix}{propName}{postfix}]");
+                if (node.Member.DeclaringType != null)
+                    this.Interpretor.WherePart.Concat(
+                        $"{this.Interpretor.DelimitedCharacters[0]}{node.Member.DeclaringType.Name}{this.Interpretor.DelimitedCharacters[1]}.{this.Interpretor.DelimitedCharacters[0]}{prefix}{propName}{postfix}{this.Interpretor.DelimitedCharacters[1]}");
                 else
-                    this.Interpretor.WherePart.Concat($"[{prefix}{propName}{postfix}]");
+                    this.Interpretor.WherePart.Concat($"{this.Interpretor.DelimitedCharacters[0]}{prefix}{propName}{postfix}{this.Interpretor.DelimitedCharacters[1]}");
 
             }
             if (node.Member is FieldInfo fieldInfo)

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Dapper.Contrib.Extensions;
 using FastMember;
 
 namespace SimpleEssentials.ToQuery.Reflector
 {
-    public class SqlReflector : IReflector
+    public class MySqlReflector : IReflector
     {
         public string GenerateCreateColumns(object obj, Type overrideType = null)
         {
@@ -18,15 +19,15 @@ namespace SimpleEssentials.ToQuery.Reflector
             if (identityProp != null)
             {
                 if (identityProp.IsDefined(typeof(ExplicitKeyAttribute)))
-                    createSql += "[" + identityProp.Name + "] " + TypeToSqlType(identityProp.Type) + " primary key, ";
+                    createSql += "`" + identityProp.Name + "` " + TypeToSqlType(identityProp.Type) + " primary key, ";
                 else
-                    createSql += "[" + identityProp.Name + "] " + TypeToSqlType(identityProp.Type) + " identity(1,1) primary key, ";
+                    createSql += "`" + identityProp.Name + "` " + TypeToSqlType(identityProp.Type) + " identity(1,1) primary key, ";
 
             }
 
             for (var i = 0; i < nonIdentityProps.Count; i++)
             {
-                createSql += "[" + nonIdentityProps[i].Name + "] " + TypeToSqlType(nonIdentityProps[i].Type);
+                createSql += "`" + nonIdentityProps[i].Name + "` " + TypeToSqlType(nonIdentityProps[i].Type);
                 if (IsNullable(nonIdentityProps[i].Type))
                     createSql += " NULL";
                 else

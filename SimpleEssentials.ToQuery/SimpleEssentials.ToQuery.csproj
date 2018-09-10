@@ -4,12 +4,12 @@
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <Authors>Kevin Suarez</Authors>
     <Company>Kevin Digital LLC</Company>
-    <Description>Simple Linq To DB Library. Currently supports LINQ to SQL. Look forward to more database engine support in the near future.</Description>
-    <Version>1.0.0.3</Version>
-    <PackageReleaseNotes>Added Support for .NET 4.5.2</PackageReleaseNotes>
+    <Description>Simple Expression To Database Query Library. Currently supports MsSQL and MySQL. Look forward to more database engine support in the near future.</Description>
+    <Version>1.0.0.4</Version>
+    <PackageReleaseNotes>Added support for MySQL</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.ToQuery</PackageProjectUrl>
-    <AssemblyVersion>1.0.0.3</AssemblyVersion>
-    <FileVersion>1.0.0.3</FileVersion>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">

@@ -3,14 +3,16 @@ using System.Linq.Expressions;
 
 namespace SimpleEssentials.ToQuery.Expression.Interpretor
 {
-    public class SqlInterpreter : IInterpreter
+    internal class MySqlInterpreter : IInterpreter
     {
         public IQueryObject WherePart { get; set; }
         public string WildcardCharacter { get; set; }
 
-        public SqlInterpreter()
+        public char[] DelimitedCharacters => new char[2] { '`', '`' };
+
+        public MySqlInterpreter()
         {
-            WherePart = new SqlQueryObject();
+            WherePart = new QueryObject();
             WildcardCharacter = "%";
 
         }

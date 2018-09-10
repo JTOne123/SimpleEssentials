@@ -1,15 +1,17 @@
 ﻿ # ToQuery
- A small, lightweight library to convert function expressions into parameterized database query string(s). 
+ A small, lightweight library to convert function expressions into parameterized a database query string. 
  
  ## Supported Databases
  * MSSQL
+ * MySqL
  * More To Come
  
  ## Usage
  To use the library, use the appropriate expression converter for your database.
  
  ### Expresison Converters
- * ExpToSql
+ * ExpToMsSql
+ * ExpToMySql
  
  #### Expression Converter Methods
  * Select
@@ -17,10 +19,11 @@
  * InnerJoinOn
  * LeftJoinOn
  * On
+ * Limit
  
  ### Simple Use
  ```C#
- var queryObject = ExpToSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == 2);
+ var queryObject = new ExpToMsSql().Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == 2).Generate();
  var sqlQuery = queryObject.Query;
 
  //output of sqlQuery:  select * from [CustomCampaign] [CustomCampaign]  where [CustomCampaign].[Id] = 2
@@ -30,7 +33,7 @@
  When passing in variabled into the expression your query will be automatically parameterized.
  ```C#
 var testVariable = 50;
-var queryObject = ExpToSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == testVariable);
+var queryObject = new ExpToMsSql().Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == testVariable).Generate();
 var sqlQuery = queryObject.Query;
 var sqlParameters = queryObject.Parameters;
 

@@ -6,6 +6,7 @@ namespace SimpleEssentials.ToQuery.Expression.Interpretor
     {
         string NodeTypeToString(ExpressionType nodeType);
         string WildcardCharacter { get; set; }
+        char[] DelimitedCharacters {get;}
         IQueryObject WherePart { get; set; }
     }
 }
