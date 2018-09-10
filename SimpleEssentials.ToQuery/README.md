@@ -1,5 +1,5 @@
 ﻿ # ToQuery
- A small, lightweight library to convert function expressions into parameterized a database query string. 
+ A small, lightweight library to convert function expressions into a parameterized database query string. 
  
  ## Supported Databases
  * MSSQL
