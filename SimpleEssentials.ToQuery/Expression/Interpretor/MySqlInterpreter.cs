@@ -8,7 +8,7 @@ namespace SimpleEssentials.ToQuery.Expression.Interpretor
         public IQueryObject WherePart { get; set; }
         public string WildcardCharacter { get; set; }
 
-        public char[] DelimitedCharacters => new char[2] { '`', '`' };
+        public char[] DelimitedCharacters => new[] { '`', '`' };
 
         public MySqlInterpreter()
         {
@@ -194,7 +194,7 @@ namespace SimpleEssentials.ToQuery.Expression.Interpretor
                 default:
                     throw new ArgumentOutOfRangeException(nameof(nodeType), nodeType, null);
             }
-            throw new Exception($"Unsupported node type: {nodeType}");
+            //throw new Exception($"Unsupported node type: {nodeType}");
         }
     }
 }

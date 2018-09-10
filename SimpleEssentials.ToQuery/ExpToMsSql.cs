@@ -37,6 +37,14 @@ namespace SimpleEssentials.ToQuery
             return this;
         }
 
+        public IExpToQuery SelectTop<T>(int rowCount)
+        {
+            var type = typeof(T);
+            _command.Concat(
+                $"select top {rowCount} * from {_interpreter.DelimitedCharacters[0]}{_reflector.GetTableName(type, type)}{_interpreter.DelimitedCharacters[1]} {_interpreter.DelimitedCharacters[0]}{_reflector.GetTableName(type, type)}{_interpreter.DelimitedCharacters[1]}");
+            return this;
+        }
+
         public IExpToQuery InnerJoinOn<T, T2>(Expression<Func<T, T2, bool>> expression)
         {
             var type = typeof(T2);
@@ -63,13 +71,12 @@ namespace SimpleEssentials.ToQuery
 
         public IExpToQuery Limit(int limitCount)
         {
-            _command.Concat($"LIMIT {limitCount}");
-            return this;
+            throw new NotSupportedException("Use \"SelectTop\" for MsSql instead.");
         }
 
         public IQueryObject Generate()
         {
-            return this._wherePart;
+            return _wherePart;
         }
 
         

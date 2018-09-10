@@ -15,6 +15,7 @@
  
  #### Expression Converter Methods
  * Select
+ * SelectTop
  * Where
  * InnerJoinOn
  * LeftJoinOn
@@ -30,7 +31,7 @@
  ```
  
  ### Parameterized Use
- When passing in variabled into the expression your query will be automatically parameterized.
+ When passing in variables into the expression your query will be automatically parameterized.
  ```C#
 var testVariable = 50;
 var queryObject = new ExpToMsSql().Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == testVariable).Generate();
