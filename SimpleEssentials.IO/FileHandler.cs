@@ -62,17 +62,17 @@ namespace SimpleEssentials.IO
             
         }
 
-        public T Read<T>(IFile file, IFileReader fileReader)
+        public T Read<T>(IFile file, IFileReader fileReader) where T : class, new()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ReadAll<T>(IFile file, IFileReader fileReader)
+        public IEnumerable<T> ReadAll<T>(IFile file, IFileReader fileReader) where T : class, new()
         {
             return fileReader?.ReadAll<T>(file.FullPath);
         }
 
-        public IEnumerable<T> ReadBy<T>(IFile file, Func<T, bool> predicate, IFileReader fileReader)
+        public IEnumerable<T> ReadBy<T>(IFile file, Func<T, bool> predicate, IFileReader fileReader) where T : class, new()
         {
 
             return fileReader?.ReadAll<T>(file.FullPath).Where(predicate);

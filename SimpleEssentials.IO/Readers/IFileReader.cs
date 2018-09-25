@@ -8,7 +8,7 @@ namespace SimpleEssentials.IO.Readers
 {
     public interface IFileReader
     {
-        T Read<T>(string filePath);
-        IEnumerable<T> ReadAll<T>(string filePath);
+        T Read<T>(string filePath) where T : class, new();
+        IEnumerable<T> ReadAll<T>(string filePath) where T : class, new();
     }
 }
