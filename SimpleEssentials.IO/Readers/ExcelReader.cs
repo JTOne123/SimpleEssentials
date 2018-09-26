@@ -63,8 +63,13 @@ namespace SimpleEssentials.IO.Readers
                         {
                             var propertyInfo = obj.GetType().GetProperty(prop.Name);
                             if (propertyInfo != null)
-                                propertyInfo.SetValue(obj,
-                                    Convert.ChangeType(row[prop.Name], propertyInfo.PropertyType), null);
+                            {
+                                var t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+
+                                var safeValue = (row[prop.Name] == null) ? null : Convert.ChangeType(row[prop.Name], t);
+
+                                propertyInfo.SetValue(obj, safeValue, null);
+                            }
                         }
                         catch
                         {
