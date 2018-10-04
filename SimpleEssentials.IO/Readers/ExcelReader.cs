@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using OfficeOpenXml;
 
 namespace SimpleEssentials.IO.Readers
 {
     public class ExcelReader : IFileReader
     {
-        public T Read<T>(string filePath) where T : class, new()
+        public T Read<T>(string filePath, Dictionary<string, string> metaData = null) where T : class, new()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ReadAll<T>(string filePath) where T : class, new()
+        public IEnumerable<T> ReadAll<T>(string filePath, Dictionary<string, string> metaData = null) where T : class, new()
         {
-            var rawData = GetDataTableFromExcel(filePath, true);
+            var rawData = GetDataTableFromExcel(filePath, true, metaData?["worksheet"]);
             return rawData == null ? null : DataTableToList<T>(rawData);
         }
 
-        private static DataTable GetDataTableFromExcel(string path, bool hasHeader)
+        private static DataTable GetDataTableFromExcel(string path, bool hasHeader, string workSheet)
         {
             using (var pck = new OfficeOpenXml.ExcelPackage())
             {
@@ -26,7 +27,12 @@ namespace SimpleEssentials.IO.Readers
                 {
                     pck.Load(stream);
                 }
-                var ws = pck.Workbook.Worksheets.First();
+
+                var ws = !string.IsNullOrEmpty(workSheet) ? pck.Workbook.Worksheets[workSheet] : pck.Workbook.Worksheets.First();
+
+                if (ws == null)
+                    return null;
+
                 var tbl = new DataTable();
                 foreach (var firstRowCell in ws.Cells[1, 1, 1, ws.Dimension.End.Column])
                 {

@@ -2,20 +2,20 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
-    <Version>1.0.0.7</Version>
+    <Version>1.0.0.11</Version>
     <Authors>Kevin Suarez</Authors>
     <Company>Kevin Digital LLC</Company>
     <Description>Simple File Manager</Description>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.IO</PackageProjectUrl>
-    <AssemblyVersion>1.0.0.7</AssemblyVersion>
-    <FileVersion>1.0.0.7</FileVersion>
-    <PackageReleaseNotes>Add Excel File support via ExcelReader.
-Fix bug.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.11</AssemblyVersion>
+    <FileVersion>1.0.0.11</FileVersion>
+    <PackageReleaseNotes>Add support to read from specific excel worksheet.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="7.1.1" />
     <PackageReference Include="EPPlus" Version="4.5.2.1" />
+    <PackageReference Include="FastMember" Version="1.3.0" />
   </ItemGroup>
 
 </Project>

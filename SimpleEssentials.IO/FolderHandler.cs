@@ -33,7 +33,7 @@ namespace SimpleEssentials.IO
         public IFolder Create(string path, IFolder parent)
         {
             var parentPath = parent.FullPath;
-            var finalPath = System.IO.Path.GetDirectoryName(parentPath + path);
+            var finalPath = parentPath + System.IO.Path.DirectorySeparatorChar + path;
             return (IFolder) Create(finalPath);
         }
 
