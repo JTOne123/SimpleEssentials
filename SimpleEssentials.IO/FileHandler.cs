@@ -56,26 +56,26 @@ namespace SimpleEssentials.IO
             return file.Load(file.FullPath);
         }
 
-        public string Read(IFile file)
+        public string Read(IFile file, Dictionary<string, string> metaData = null)
         {
             return System.IO.File.ReadAllText(file.FullPath);
             
         }
 
-        public T Read<T>(IFile file, IFileReader fileReader)
+        public T Read<T>(IFile file, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ReadAll<T>(IFile file, IFileReader fileReader)
+        public IEnumerable<T> ReadAll<T>(IFile file, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
         {
-            return fileReader?.ReadAll<T>(file.FullPath);
+            return fileReader?.ReadAll<T>(file.FullPath, metaData);
         }
 
-        public IEnumerable<T> ReadBy<T>(IFile file, Func<T, bool> predicate, IFileReader fileReader)
+        public IEnumerable<T> ReadBy<T>(IFile file, Func<T, bool> predicate, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
         {
 
-            return fileReader?.ReadAll<T>(file.FullPath).Where(predicate);
+            return fileReader?.ReadAll<T>(file.FullPath, metaData).Where(predicate);
         }
 
         public bool Write(IFile file, string content, bool append)

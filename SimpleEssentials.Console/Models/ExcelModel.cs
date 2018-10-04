@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleEssentials.Console.Models
 {
-    public class TestItem
+    public class ExcelModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 }

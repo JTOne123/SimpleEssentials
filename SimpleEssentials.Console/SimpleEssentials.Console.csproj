@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Models\CustomCampaign.cs" />
+    <Compile Include="Models\ExcelModel.cs" />
     <Compile Include="Models\TestItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
