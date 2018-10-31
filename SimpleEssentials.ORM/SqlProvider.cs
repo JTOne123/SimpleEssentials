@@ -5,14 +5,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using Dapper;
 using Dapper.Contrib.Extensions;
-using SimpleEssentials.LinqToDb;
-using SimpleEssentials.LinqToDb.Reflector;
+using SimpleEssentials.ToQuery;
+using SimpleEssentials.ToQuery.Reflector;
 
 namespace SimpleEssentials.ORM
 {
     public class SqlProvider : IDbProvider
     {
         private string ConnectionString { get; set; }
+        private readonly ExpToMsSql _toSql = new ExpToMsSql();
+        private readonly MySqlReflector _sqlReflector = new MySqlReflector();
 
         public SqlProvider(string connectionString)
         {
@@ -41,15 +43,13 @@ namespace SimpleEssentials.ORM
 
         internal string CreateTableSql<T>() where T : class, new()
         {
-            var sqlReflector = new SqlReflector();
             var obj = new T();
-            return $"CREATE TABLE {sqlReflector.GetTableName(obj)} {sqlReflector.GenerateCreateColumns(obj)}";
+            return $"CREATE TABLE {_sqlReflector.GetTableName(obj)} {_sqlReflector.GenerateCreateColumns(obj)}";
         }
 
         internal string InsertSql<T>(T obj, Type overrideType = null)
         {
-            var sqlReflector = new SqlReflector();
-            return $"insert into {sqlReflector.GetTableName(obj, overrideType)}{sqlReflector.GenerateInsertColumnNames(obj, overrideType)}";
+            return $"insert into {_sqlReflector.GetTableName(obj, overrideType)}{_sqlReflector.GenerateInsertColumnNames(obj, overrideType)}";
         }
 
         public int InsertAndReturnId<T>(T obj) where T : class, new()
@@ -133,8 +133,8 @@ namespace SimpleEssentials.ORM
 
         public IEnumerable<T> Get<T>(Expression<Func<T, bool>> expression) where T : class, new()
         {
-            var whereClause = LinqToSql.Select<T>().Where(expression);
-            return GetByParameters<T>(whereClause.Sql, whereClause.Parameters);
+            var whereClause = _toSql.Select<T>().Where(expression).Generate();
+            return GetByParameters<T>(whereClause.Query, whereClause.Parameters);
         }
 
         public IEnumerable<T> GetByParameters<T>(string sql, object param)

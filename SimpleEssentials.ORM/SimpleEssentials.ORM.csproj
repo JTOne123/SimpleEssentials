@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Dapper.Contrib" Version="1.50.5" />
-    <PackageReference Include="SimpleEssentials.LinqToDb" Version="1.0.0.2" />
+    <PackageReference Include="SimpleEssentials.ToQuery" Version="1.0.0.5" />
     <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
   </ItemGroup>
 
