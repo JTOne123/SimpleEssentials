@@ -65,7 +65,7 @@ namespace SimpleEssentials.ToQuery.Reflector
             var type = overrideType ?? obj.GetType();
             string name;
             var tableAttr = type
-                .GetTypeInfo();
+                .GetTypeInfo().GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute") as dynamic;
 
             if (tableAttr != null)
             {
