@@ -23,33 +23,17 @@ namespace SimpleEssentials.Console
     {
         static void Main(string[] args)
         {
-            var objList = new List<TestItem>()
-            {
-                new TestItem() {Id = 0, Name = "Hello"},
-                new TestItem() {Id = 1, Name = "World"},
-            };
-            var folderHandler = new FolderHandler();
-            var fileHandler = new FileHandler();
-            //var folder = folderHandler.Create("test", true);
-            var file = (IFile) fileHandler.Get(
-                "C:\\Users\\ksuarez\\Source\\Repos\\SimpleEssentials\\SimpleEssentials.Console\\bin\\Debug\\test\\test.xlsx");
-            fileHandler.Write(file, (IEnumerable<TestItem>)objList, new ExcelWriter(), false);
-            var data = fileHandler.ReadAll<TestItem>(file, new ExcelReader());
+            //test(1);
 
             System.Console.WriteLine("Press Enter to Exit");
             System.Console.ReadLine();
         }
 
-        /*static void test(int id)
+        static void test(int id)
         {
-            var queryObject = ExpToMsSql.Select<CustomCampaign>().Where<CustomCampaign>(x => x.Id == id);
+            var queryObject = new ExpToMsSql().Select<CustomCampaign>().Where<CustomCampaign>(x => x.Exported == false).Generate();
             var sqlQuery = queryObject.Query;
             var sqlParameters = queryObject.Parameters;
-        }*/
-
-        static int Test()
-        {
-            return 0;
         }
     }
 }

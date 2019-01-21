@@ -5,11 +5,11 @@
     <Authors>Kevin Suarez</Authors>
     <Company>Kevin Digital LLC</Company>
     <Description>Simple Expression To Database Query Library. Currently supports MsSQL and MySQL. Look forward to more database engine support in the near future.</Description>
-    <Version>1.0.0.6</Version>
-    <PackageReleaseNotes>Add support for table attribute</PackageReleaseNotes>
+    <Version>1.0.0.8</Version>
+    <PackageReleaseNotes>Booleans are now represented as ints in queries.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.ToQuery</PackageProjectUrl>
-    <AssemblyVersion>1.0.0.6</AssemblyVersion>
-    <FileVersion>1.0.0.6</FileVersion>
+    <AssemblyVersion>1.0.0.8</AssemblyVersion>
+    <FileVersion>1.0.0.8</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">

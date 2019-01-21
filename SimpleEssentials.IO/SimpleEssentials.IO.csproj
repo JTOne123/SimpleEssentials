@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
-    <Version>1.0.0.11</Version>
+    <Version>1.0.0.12</Version>
     <Authors>Kevin Suarez</Authors>
     <Company>Kevin Digital LLC</Company>
     <Description>Simple File Manager</Description>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.IO</PackageProjectUrl>
-    <AssemblyVersion>1.0.0.11</AssemblyVersion>
-    <FileVersion>1.0.0.11</FileVersion>
-    <PackageReleaseNotes>Add support to read from specific excel worksheet.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.12</AssemblyVersion>
+    <FileVersion>1.0.0.12</FileVersion>
+    <PackageReleaseNotes>Create a static class abstraction in front of implementation</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

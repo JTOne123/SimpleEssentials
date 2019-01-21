@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using SimpleEssentials.ToQuery.Expression.Interpretor;
@@ -25,8 +26,16 @@ namespace SimpleEssentials.ToQuery.Expression.Visitors
 
                 //Interpretor.WherePart.Sql += $"[{propName}]";
                 if (node.Member.DeclaringType != null)
+                {
+                    var declaringTypeName = node.Member.DeclaringType.Name;
+                    var tableAttr = node.Member.DeclaringType.GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute") as dynamic;
+                    if (tableAttr != null)
+                    {
+                        declaringTypeName = tableAttr.Name;
+                    }
                     this.Interpretor.WherePart.Concat(
-                        $"{this.Interpretor.DelimitedCharacters[0]}{node.Member.DeclaringType.Name}{this.Interpretor.DelimitedCharacters[1]}.{this.Interpretor.DelimitedCharacters[0]}{prefix}{propName}{postfix}{this.Interpretor.DelimitedCharacters[1]}");
+                        $"{this.Interpretor.DelimitedCharacters[0]}{declaringTypeName}{this.Interpretor.DelimitedCharacters[1]}.{this.Interpretor.DelimitedCharacters[0]}{prefix}{propName}{postfix}{this.Interpretor.DelimitedCharacters[1]}");
+                }
                 else
                     this.Interpretor.WherePart.Concat($"{this.Interpretor.DelimitedCharacters[0]}{prefix}{propName}{postfix}{this.Interpretor.DelimitedCharacters[1]}");
 

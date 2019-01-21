@@ -1,116 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Text;
+using SimpleEssentials.IO.Handlers;
 using SimpleEssentials.IO.Readers;
 using SimpleEssentials.IO.Types;
 using SimpleEssentials.IO.Writers;
 
 namespace SimpleEssentials.IO
 {
-    public class FileHandler : IFileHandler
+    public static class FileHandler
     {
-        public IFileType Create(string path)
+        private static readonly IFileHandler FileHandlerInstance = new Handlers.FileHandler();
+
+        public static IFile Create(string path)
         {
-            var file = new File(path);
-            if (file.Loaded) return file;
-
-            using (var sr = System.IO.File.Create(path))
-            {
-            }
-            
-
-            file.Load(path);
-            return file;
+            return (IFile)FileHandlerInstance.Create(path);
         }
 
-        public IFile Create(string fileName, IFolder parentFolder)
+        public static IFile Create(string fileName, IFolder parentFolder)
         {
-            var finalPath = parentFolder.FullPath + System.IO.Path.DirectorySeparatorChar + fileName;
-
-            var file = new File(finalPath);
-            if (file.Loaded) return file;
-
-            using (var sr = System.IO.File.Create(finalPath))
-            {
-            }
-            file.Load(finalPath);
-            return file;
+            return (IFile)FileHandlerInstance.Create(fileName, parentFolder);
         }
 
-        public bool Move(ref IFileType file, string newPath)
+        public static bool Move(ref IFileType file, string newPath)
         {
-            var destPath = newPath + file.Name + ((IFile) file).Extension;
-            System.IO.File.Move(file.FullPath, destPath);
-            file.FullPath = destPath;
-            return true;
+            return FileHandlerInstance.Move(ref file, newPath);
         }
 
-        public bool Rename(ref IFileType file, string newName)
+        public static bool Rename(ref IFileType file, string newName)
         {
-            var filePath = new System.IO.FileInfo(file.FullPath).Directory?.FullName;
-            var newFilePath = filePath + System.IO.Path.DirectorySeparatorChar + newName + ((IFile)file).Extension;
-            System.IO.File.Move(file.FullPath, newFilePath);
-            file.Name = newName;
-            file.FullPath = newFilePath;
-            return file.Load(file.FullPath);
+            return FileHandlerInstance.Rename(ref file, newName);
         }
 
-        public string Read(IFile file, Dictionary<string, string> metaData = null)
+        public static string Read(IFile file, Dictionary<string, string> metaData = null)
         {
-            return System.IO.File.ReadAllText(file.FullPath);
-            
+            return FileHandlerInstance.Read(file, metaData);
+
         }
 
-        public T Read<T>(IFile file, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
+        public static T Read<T>(IFile file, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
         {
-            throw new NotImplementedException();
+            return FileHandlerInstance.Read<T>(file, fileReader, metaData);
         }
 
-        public IEnumerable<T> ReadAll<T>(IFile file, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
+        [Obsolete("Deprecated. Use ReadToList instead.")]
+        public static IEnumerable<T> ReadAll<T>(IFile file, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
         {
-            return fileReader?.ReadAll<T>(file.FullPath, metaData);
+            return ReadToList<T>(file, fileReader, metaData);
         }
 
-        public IEnumerable<T> ReadBy<T>(IFile file, Func<T, bool> predicate, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
+        public static IEnumerable<T> ReadToList<T>(IFile file, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
         {
-
-            return fileReader?.ReadAll<T>(file.FullPath, metaData).Where(predicate);
+            return FileHandlerInstance.ReadToList<T>(file, fileReader, metaData);
         }
 
-        public bool Write(IFile file, string content, bool append)
+        public static IEnumerable<T> ReadBy<T>(IFile file, Func<T, bool> predicate, IFileReader fileReader, Dictionary<string, string> metaData = null) where T : class, new()
         {
-            if (append)
-            {
-                using (var strem = System.IO.File.AppendText(file.FullPath))
-                {
-                    strem.WriteLine(content);
-                }
-            }
-            else
-            {
-                using (var strem = System.IO.File.CreateText(file.FullPath))
-                {
-                    strem.WriteLine(content);
-                }
-            }
-            
-            return true;
+
+            return FileHandlerInstance.ReadBy(file, predicate, fileReader, metaData);
         }
 
-        public void Write<T>(IFile file, T obj, IFileWriter fileWriter, bool append)
+        public static bool Write(IFile file, string content, bool append)
         {
-            fileWriter?.Write(file.FullPath, obj, append);
+            return FileHandlerInstance.Write(file, content, append);
         }
 
-        public void Write<T>(IFile file, IEnumerable<T> obj, IFileWriter fileWriter, bool append)
+        public static void Write<T>(IFile file, T obj, IFileWriter fileWriter, bool append)
         {
-            fileWriter?.Write(file.FullPath, obj, append);
+            FileHandlerInstance.Write(file, obj, fileWriter, append);
         }
 
-        public IFileType Get(string path)
+        public static void Write<T>(IFile file, IEnumerable<T> obj, IFileWriter fileWriter, bool append)
         {
-            return new File(path);
+            FileHandlerInstance.Write(file, obj, fileWriter, append);
+        }
+
+        public static IFile Get(string path)
+        {
+            return (IFile)FileHandlerInstance.Get(path);
         }
     }
 }

@@ -5,10 +5,10 @@
     <Authors>Kevin Suarez</Authors>
     <Company>Kevin Digital LLC</Company>
     <Description>Simple ORM Wrapper around Dapper.</Description>
-    <Version>1.0.0.6</Version>
-    <PackageReleaseNotes>Add support for table attribute</PackageReleaseNotes>
-    <AssemblyVersion>1.0.0.6</AssemblyVersion>
-    <FileVersion>1.0.0.6</FileVersion>
+    <Version>1.0.0.8</Version>
+    <PackageReleaseNotes>Fix bug on mapping properties</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0.8</AssemblyVersion>
+    <FileVersion>1.0.0.8</FileVersion>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.ORM</PackageProjectUrl>
   </PropertyGroup>
 
@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Dapper.Contrib" Version="1.50.5" />
-    <PackageReference Include="SimpleEssentials.ToQuery" Version="1.0.0.6" />
+    <PackageReference Include="SimpleEssentials.ToQuery" Version="1.0.0.8" />
     <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
   </ItemGroup>
 

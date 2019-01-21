@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Linq.Expressions;
 using SimpleEssentials.ToQuery.Expression.Interpretor;
 
 namespace SimpleEssentials.ToQuery.Expression.Visitors
@@ -20,6 +21,8 @@ namespace SimpleEssentials.ToQuery.Expression.Visitors
 
             if (node.Type == typeof(string))
                 this.Interpretor.WherePart.Concat($"'{prefix}{node.Value.ToString()}{postfix}'");
+            else if (node.Type == typeof(bool))
+                this.Interpretor.WherePart.Concat($"{prefix}{Convert.ToInt32(node.Value)}{postfix}");
             else
                 this.Interpretor.WherePart.Concat($"{prefix}{node.Value.ToString()}{postfix}");
 

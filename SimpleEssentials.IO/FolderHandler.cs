@@ -1,102 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+using System.Text;
+using SimpleEssentials.IO.Handlers;
 using SimpleEssentials.IO.Types;
 using File = SimpleEssentials.IO.Types.File;
 
 namespace SimpleEssentials.IO
 {
-    public class FolderHandler : IFolderHandler
+    public static class FolderHandler
     {
-        public IFileType Create(string path)
+        private static readonly IFolderHandler FolderHandlerInstance = new Handlers.FolderHandler();
+
+        public static IFolder Create(string path)
         {
-            System.IO.Directory.CreateDirectory(path);
-            return new Folder(path);
+            return (IFolder)FolderHandlerInstance.Create(path);
         }
 
-        public IFolder Create(string path, bool relative)
+        public static IFolder Create(string path, bool relative)
         {
-            if (!relative)
-                return (IFolder)Create(path);
-#if NETSTANDARD2_0
-            var filePath = new Uri(AppContext.BaseDirectory).LocalPath;
-#else
-            var filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
-#endif
-            var finalpath = Path.GetDirectoryName(filePath) + System.IO.Path.DirectorySeparatorChar + path;
-            System.IO.Directory.CreateDirectory(finalpath);
-            var finalResult = System.IO.Path.GetDirectoryName(finalpath);
-            return new Folder(finalpath);
+            return FolderHandlerInstance.Create(path, relative);
         }
 
-        public IFolder Create(string path, IFolder parent)
+        public static IFolder Create(string path, IFolder parent)
         {
-            var parentPath = parent.FullPath;
-            var finalPath = parentPath + System.IO.Path.DirectorySeparatorChar + path;
-            return (IFolder) Create(finalPath);
+            return (IFolder)FolderHandlerInstance.Create(path, parent);
         }
 
-        public bool Rename(ref IFileType file, string newName)
+        public static bool Rename(ref IFileType file, string newName)
         {
-            var newFilePath = file.FullPath + System.IO.Path.DirectorySeparatorChar + newName;
-            var tempFilePath = file.FullPath + "_tmpfile";
-            System.IO.Directory.Move(file.FullPath, tempFilePath);
-            System.IO.Directory.Move(tempFilePath, newFilePath);
-            return file.Load(newFilePath);
+            return FolderHandlerInstance.Rename(ref file, newName);
         }
 
-        public IEnumerable<IFileType> GetChildren(IFolder parentFolder)
+        public static IEnumerable<IFileType> GetChildren(IFolder parentFolder)
         {
-            var files = new List<IFileType>();
-            files.AddRange(GetChildFiles(parentFolder));
-            files.AddRange(GetChildFolders(parentFolder));
-
-            return files;
+            return FolderHandlerInstance.GetChildren(parentFolder);
         }
 
-        public bool Move(ref IFileType file, string newPath)
+        public static bool Move(ref IFileType file, string newPath)
         {
-            System.IO.File.Move(file.FullPath, newPath);
-            return file.Load(newPath);
+            return FolderHandlerInstance.Move(ref file, newPath);
         }
 
-        public IEnumerable<IFile> GetChildFiles(IFolder parentFolder)
+        public static IEnumerable<IFile> GetChildFiles(IFolder parentFolder)
         {
-            var files = new List<IFile>();
-            var filePaths = System.IO.Directory.GetFiles(parentFolder.FullPath);
-
-            foreach (var filePath in filePaths)
-            {
-                var file = new File(filePath);
-                if(file.Loaded)
-                    files.Add(file);
-            }
-
-            return files;
-
+            return FolderHandlerInstance.GetChildFiles(parentFolder);
         }
 
-        public IEnumerable<IFolder> GetChildFolders(IFolder parentFolder)
+        public static IEnumerable<IFolder> GetChildFolders(IFolder parentFolder)
         {
-            var files = new List<IFolder>();
-            var filePaths = System.IO.Directory.GetDirectories(parentFolder.FullPath);
-
-            foreach (var filePath in filePaths)
-            {
-                var file = new Folder(filePath);
-                if (file.Loaded)
-                    files.Add(file);
-            }
-
-            return files;
+            return FolderHandlerInstance.GetChildFolders(parentFolder);
         }
 
-        public IFileType Get(string path)
+        public static IFolder Get(string path)
         {
-            return new Folder(path);
+            return (IFolder)FolderHandlerInstance.Get(path);
         }
 
-        
     }
 }

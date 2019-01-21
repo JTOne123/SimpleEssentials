@@ -13,7 +13,7 @@ namespace SimpleEssentials.IO.Readers
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ReadAll<T>(string filePath, Dictionary<string, string> metaData = null) where T : class, new()
+        public IEnumerable<T> ReadToList<T>(string filePath, Dictionary<string, string> metaData = null) where T : class, new()
         {
             var rawData = GetDataTableFromExcel(filePath, true, metaData?["worksheet"]);
             return rawData == null ? null : DataTableToList<T>(rawData);

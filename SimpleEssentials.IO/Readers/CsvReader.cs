@@ -14,7 +14,7 @@ namespace SimpleEssentials.IO.Readers
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ReadAll<T>(string filePath, Dictionary<string, string> metaData = null) where T : class, new()
+        public IEnumerable<T> ReadToList<T>(string filePath, Dictionary<string, string> metaData = null) where T : class, new()
         {
             IEnumerable<T> records = null;
             using (System.IO.TextReader fileReader = System.IO.File.OpenText(filePath))
