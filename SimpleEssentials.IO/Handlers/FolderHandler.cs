@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using SimpleEssentials.IO.Types;
 using File = SimpleEssentials.IO.Types.File;
 

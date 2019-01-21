@@ -10,6 +10,7 @@
     <AssemblyVersion>1.0.0.12</AssemblyVersion>
     <FileVersion>1.0.0.12</FileVersion>
     <PackageReleaseNotes>Create a static class abstraction in front of implementation</PackageReleaseNotes>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
