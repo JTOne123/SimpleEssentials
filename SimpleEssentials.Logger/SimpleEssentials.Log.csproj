@@ -9,7 +9,15 @@
     <Company>Kevin Digital LLC</Company>
     <Description>Simple Logging Library</Description>
     <PackageProjectUrl>https://github.com/ksuarez2/SimpleEssentials/tree/master/SimpleEssentials.Log</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="SimpleEssentials.IO" Version="1.0.0.4" />
